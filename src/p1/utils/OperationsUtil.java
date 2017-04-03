@@ -1,6 +1,8 @@
 package p1.utils;
 
+import entity.Release;
 import java.io.File;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import p1.enums.ImageEnum;
@@ -50,5 +52,9 @@ public class OperationsUtil {
                 return new ImageIcon(ImageEnum.FAIL.getPath(), ImageEnum.FAIL.getAlt());
         }
         return null;
+    }
+    
+    public List<Release> getAllReleases(){
+        return databaseUtil.getAllReleases();
     }
 }

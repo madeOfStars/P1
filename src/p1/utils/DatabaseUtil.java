@@ -6,6 +6,7 @@
 package p1.utils;
 
 import entity.Project;
+import entity.Release;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
@@ -51,6 +52,14 @@ public class DatabaseUtil {
         String hql="FROM Project";
         Query q=sp.getSession().createQuery(hql);
         List<Project> lista=q.list();
+        return lista;
+    }
+    
+    public List<Release> getAllReleases(){
+        SessionPackage sp=new SessionPackage();
+        String hql="SELECT Pr.release FROM ProjectRelease Pr";
+        Query q=sp.getSession().createQuery(hql);
+        List<Release> lista=q.list();
         return lista;
     }
 }

@@ -5,39 +5,28 @@
  */
 package p1.panels;
 
-import entity.Project;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.util.List;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import p1.enums.FontEnum;
+import p1.helpers.FullListViewHelper;
+import p1.interfaces.Returnable;
 import p1.listeners.MListener;
-import p1.utils.DatabaseUtil;
-import p1.utils.FlowUtil;
 
 /**
  *
  * @author Ertjon
  */
-public class FullListView extends JPanel {
-
-    private DatabaseUtil dbUtil = DatabaseUtil.getInstance();
-    private final String[] columns = new String[]{"ID","Project Name", "Path", "Date Added"};
-    private Object[][] data;
-    private JTable jTable;
+public class FullListView extends FullListViewHelper implements Returnable{
+    private final JTable jTable;
+    private JPanel mainPanel=new JPanel();
     
     public FullListView() {
         JPanel tablePanel = new JPanel();
-        getData();
+        fillJTable();
         jTable = new JTable();
-        jTable.setModel(new CellEditable(data, columns));
+        jTable.setModel(new CellEditable(getData(), getColumns()));
         jTable.setRowHeight(50);
         jTable.setShowVerticalLines(false);
         jTable.setFont(FontEnum.TABLE_CONTENT.getFont());
@@ -50,30 +39,11 @@ public class FullListView extends JPanel {
         jsp.setBorder(BorderFactory.createEmptyBorder());
         //jsp.setSize(250, 650);
         tablePanel.add(jsp);
-        this.add(tablePanel);
+        mainPanel.add(tablePanel);
     }
 
-    private void getData() {
-        
-        List<Project> lista = dbUtil.getAllProjects();
-        data = new Object[lista.size()][4];
-        for (int i = 0; i < lista.size(); i++) {
-            data[i][0] = lista.get(i).getId();
-            data[i][1] = lista.get(i).getProjectName();
-            data[i][2] = lista.get(i).getPath();
-            data[i][3] = lista.get(i).getDateAdded();
-        }
-    }
-    
-    private class CellEditable extends DefaultTableModel {
-
-        public CellEditable(Object[][] data, String[] columns) {
-            super(data, columns);
-        }
-
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
-        }
+    @Override
+    public JPanel getPanel() {
+        return mainPanel;
     }
 }

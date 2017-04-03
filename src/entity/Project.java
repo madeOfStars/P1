@@ -1,12 +1,18 @@
 package entity;
 // Generated Apr 1, 2017 2:04:21 PM by Hibernate Tools 4.3.1
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,6 +28,8 @@ public class Project implements java.io.Serializable {
     private String projectName;
     private String path;
     private Date dateAdded;
+
+    private List<Release> projectReleases = new ArrayList<>();
 
     public Project() {
     }
@@ -76,4 +84,17 @@ public class Project implements java.io.Serializable {
     public void setDateAdded(Date dateAdded) {
         this.dateAdded = dateAdded;
     }
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "PROJECT_RELEASE", joinColumns = {@JoinColumn(name = "ID")},inverseJoinColumns = {@JoinColumn(name = "RELEASE_ID")})
+    public List<Release> getProjectReleases() {
+        return projectReleases;
+    }
+
+    public void setProjectReleases(List<Release> projectReleases) {
+        this.projectReleases = projectReleases;
+    }
+    
+    //https://dzone.com/tutorials/java/hibernate/hibernate-example/hibernate-mapping-one-to-many-using-annotations-1.html
+
 }
