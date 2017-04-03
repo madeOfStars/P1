@@ -1,5 +1,6 @@
 package p1.utils;
 
+import entity.Project;
 import entity.Release;
 import java.io.File;
 import java.util.List;
@@ -54,7 +55,7 @@ public class OperationsUtil {
         return null;
     }
     
-    public List<Release> getAllReleases(){
-        return databaseUtil.getAllReleases();
+    public List<Release> getAllReleases(Project p){
+        return databaseUtil.getAllReleases(p);
     }
 }

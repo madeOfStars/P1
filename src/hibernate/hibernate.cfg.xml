@@ -11,7 +11,6 @@
         </property>
         <mapping class="entity.Kot"/>
         <mapping class="entity.Project"/>
-        <mapping class="entity.ProjectRelease"/>
         <mapping class="entity.Release"/>
     </session-factory>
 </hibernate-configuration>

@@ -55,11 +55,12 @@ public class DatabaseUtil {
         return lista;
     }
     
-    public List<Release> getAllReleases(){
+    public List<Release> getAllReleases(Project p){
         SessionPackage sp=new SessionPackage();
-        String hql="SELECT Pr.release FROM ProjectRelease Pr";
+        String hql="from Project p where p.id=:id";
         Query q=sp.getSession().createQuery(hql);
-        List<Release> lista=q.list();
-        return lista;
+        q.setParameter("id", p.getId());
+        List<Project> lista=q.list();
+        return lista.get(0).getProjectReleases();
     }
 }

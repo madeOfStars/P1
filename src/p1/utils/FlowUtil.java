@@ -57,7 +57,7 @@ public class FlowUtil {
     public void defineProjectView(Project project) {
         clean();
         OperationsUtil ou = OperationsUtil.getInstance();
-        List<Release> lista = ou.getAllReleases();
+        List<Release> lista = ou.getAllReleases(project);
         if (lista != null && lista.size() > 0) {
 
         } else {
