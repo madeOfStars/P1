@@ -5,6 +5,7 @@ import entity.Release;
 import java.awt.Container;
 import java.util.List;
 import javax.swing.BoxLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import p1.enums.ContainerPositionEnum;
 import p1.enums.LabelEnum;
@@ -23,6 +24,8 @@ public class FlowUtil {
 
     private Container cp;
     private DatabaseUtil databaseUtil = DatabaseUtil.getInstance();
+
+    private Project currentProject;
 
     public Container getCp() {
         return cp;
@@ -55,6 +58,7 @@ public class FlowUtil {
     }
 
     public void defineProjectView(Project project) {
+        this.currentProject = project;
         clean();
         OperationsUtil ou = OperationsUtil.getInstance();
         List<Release> lista = ou.getAllReleases(project);
@@ -65,6 +69,14 @@ public class FlowUtil {
             setView(new NoItemPanel(LabelEnum.NEW_RELEASE_LBL.name(), LabelEnum.NEW_RELEASE_LBL.getMessage()));
         }
 
+    }
+
+    public void addNewRelease() {
+        String code = JOptionPane.showInputDialog(getCp(), "Enter Release Code");
+        if (code != null) {
+            int intCode = Integer.parseInt(code);
+            OperationsUtil.getInstance().addNewRelease(currentProject, intCode);
+        }
     }
 
     public void setView(JPanel panel) {

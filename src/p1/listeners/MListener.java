@@ -29,6 +29,7 @@ public class MListener extends MouseAdapter {
             if (temp.getName().equals(LabelEnum.NEW_PRJ_LBL.name())) {
                 operationsUtils.addNewProject();
             } else if (temp.getName().equals(LabelEnum.NEW_RELEASE_LBL.name())) {
+                flowUtil.addNewRelease();
             }
         } else if (src instanceof JTable) {
             JTable table = (JTable) src;

@@ -7,7 +7,6 @@ package p1.helpers;
 
 import entity.Project;
 import java.util.List;
-import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import p1.utils.DatabaseUtil;
 

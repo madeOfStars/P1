@@ -25,7 +25,6 @@ public class Release implements java.io.Serializable {
     private Date dateAdded;
     private Integer closed;
     private Date dateClosed;
-    private Set releaseVersions = new HashSet(0);
 
     public Release() {
     }
@@ -35,13 +34,19 @@ public class Release implements java.io.Serializable {
         this.code = code;
     }
 
-    public Release(int id, int code, Date dateAdded, Integer closed, Date dateClosed, Set releaseVersions) {
+    public Release(int id, int code, Date dateAdded, Integer closed, Date dateClosed) {
         this.id = id;
         this.code = code;
         this.dateAdded = dateAdded;
         this.closed = closed;
         this.dateClosed = dateClosed;
-        this.releaseVersions = releaseVersions;
+    }
+
+    public Release(int code, Date dateAdded, int closed, Date dateClosed) {
+        this.code = code;
+        this.dateAdded = dateAdded;
+        this.closed = closed;
+        this.dateClosed = dateClosed;
     }
 
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -86,7 +86,9 @@ public class Project implements java.io.Serializable {
     }
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "PROJECT_RELEASE", joinColumns = {@JoinColumn(name = "ID")},inverseJoinColumns = {@JoinColumn(name = "RELEASE_ID")})
+    @JoinTable(name = "PROJECT_RELEASE", joinColumns = {
+        @JoinColumn(name = "PROJECT_ID")}, inverseJoinColumns = {
+        @JoinColumn(name = "RELEASE_ID")})
     public List<Release> getProjectReleases() {
         return projectReleases;
     }
@@ -94,7 +96,7 @@ public class Project implements java.io.Serializable {
     public void setProjectReleases(List<Release> projectReleases) {
         this.projectReleases = projectReleases;
     }
-    
-    //https://dzone.com/tutorials/java/hibernate/hibernate-example/hibernate-mapping-one-to-many-using-annotations-1.html
 
+    //https://dzone.com/tutorials/java/hibernate/hibernate-example/hibernate-mapping-one-to-many-using-annotations-1.html
+    //http://docs.jboss.org/hibernate/orm/3.6/reference/en-US/html_single/#example-one-to-many-with-join-table
 }

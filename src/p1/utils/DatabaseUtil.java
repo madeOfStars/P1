@@ -8,6 +8,7 @@ package p1.utils;
 import entity.Project;
 import entity.Release;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
@@ -62,5 +63,22 @@ public class DatabaseUtil {
         q.setParameter("id", p.getId());
         List<Project> lista=q.list();
         return lista.get(0).getProjectReleases();
+    }
+    
+    public boolean addNewRelease(Project project, int codeRelease){
+        SessionPackage sp=new SessionPackage();
+        try {
+            List<Release> list =new ArrayList<>();
+            list.add(new Release(codeRelease, new Date(), 0, null));
+            project.setProjectReleases(list);
+            sp.getSession().update(project);
+            sp.getTx().commit();;
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        } finally {
+            sp.getSession().close();
+        }
     }
 }

@@ -58,4 +58,8 @@ public class OperationsUtil {
     public List<Release> getAllReleases(Project p){
         return databaseUtil.getAllReleases(p);
     }
+    
+    public boolean addNewRelease(Project project, int releaseCode){
+        return databaseUtil.addNewRelease(project, releaseCode);
+    }
 }
