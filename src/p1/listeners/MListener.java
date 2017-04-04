@@ -8,6 +8,7 @@ import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
+import p1.enums.ActiveView;
 import p1.enums.LabelEnum;
 import p1.utils.FlowUtil;
 import p1.utils.OperationsUtil;
@@ -27,7 +28,7 @@ public class MListener extends MouseAdapter {
         if (src instanceof JLabel) {
             JLabel temp = (JLabel) src;
             if (temp.getName().equals(LabelEnum.NEW_PRJ_LBL.name())) {
-                operationsUtils.addNewProject();
+                operationsUtils.popUpMessages(operationsUtils.addNewProject(), "Project Successfully Added", "Project Failed To Be Added", ActiveView.PROJECT_VIEW);
             } else if (temp.getName().equals(LabelEnum.NEW_RELEASE_LBL.name())) {
                 flowUtil.addNewRelease();
             }

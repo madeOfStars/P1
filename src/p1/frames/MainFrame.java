@@ -9,6 +9,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import p1.enums.ActiveView;
 import p1.enums.ImageEnum;
 import p1.enums.MenuEnum;
 import p1.utils.FlowUtil;
@@ -57,13 +58,7 @@ public class MainFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent ae) {
             Boolean newPrj=op.addNewProject();
-            if (newPrj==null)
-                return;
-            if (newPrj) {
-                JOptionPane.showMessageDialog(rootPane, "Project Successfully Added", "Success", JOptionPane.DEFAULT_OPTION, op.getIcon(ImageEnum.OK));
-            } else {
-                JOptionPane.showMessageDialog(rootPane, "Project Failed To Be Added", "Fail", JOptionPane.ERROR_MESSAGE, op.getIcon(ImageEnum.FAIL));
-            }
+            op.popUpMessages(newPrj, "Project Successfully Added", "Project Failed To Be Added",ActiveView.PROJECT_VIEW);
         }
 
     }

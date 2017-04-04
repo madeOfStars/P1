@@ -23,7 +23,7 @@ public class FlowUtil {
     private static FlowUtil instance = null;
 
     private Container cp;
-    private DatabaseUtil databaseUtil = DatabaseUtil.getInstance();
+    private final DatabaseUtil databaseUtil = DatabaseUtil.getInstance();
 
     private Project currentProject;
 
@@ -53,7 +53,7 @@ public class FlowUtil {
             setView(new FullListView().getPanel());
             getCp().setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
         } else {
-            setView(new NoProjectsPanel(), ContainerPositionEnum.SOUTH.getLocation());
+            setView(new NoProjectsPanel(), ContainerPositionEnum.NORTH.getLocation());
         }
     }
 

@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import p1.enums.FontEnum;
+import p1.enums.TableEnum;
 import p1.helpers.FullListViewHelper;
 import p1.interfaces.Returnable;
 import p1.listeners.MListener;
@@ -19,10 +20,15 @@ import p1.listeners.MListener;
  * @author Ertjon
  */
 public class FullListView extends FullListViewHelper implements Returnable{
-    private final JTable jTable;
-    private JPanel mainPanel=new JPanel();
+    private JTable jTable=null;
+    private final JPanel mainPanel=new JPanel();
     
-    public FullListView() {
+    public FullListView(){
+        this(new String[]{"ID", "Project Name", "Path", "Date Added"}, TableEnum.PROJECT_TABLE);
+    }
+    
+    public FullListView(String []columns, TableEnum tableEnum) {
+        super(columns,tableEnum);
         JPanel tablePanel = new JPanel();
         fillJTable();
         jTable = new JTable();
