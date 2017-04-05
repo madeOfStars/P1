@@ -10,6 +10,22 @@ package p1.enums;
  * @author Ertjon
  */
 public enum TableEnum {
-    PROJECT_TABLE,
-    RELEASE_TABLE;
+
+    PROJECT_TABLE(new String[]{"ID", "Project Name", "Path", "Date Added"}),
+    RELEASE_TABLE(new String[]{"ID", "Code", "Date Added", "Closed", "Date Closed"});
+
+    private String[] columns;
+
+    TableEnum(String[] columns) {
+        this.columns = columns;
+    }
+
+    public String[] getColumns() {
+        return columns;
+    }
+
+    public void setColumns(String[] columns) {
+        this.columns = columns;
+    }
+
 }

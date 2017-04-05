@@ -10,6 +10,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableModel;
 import p1.enums.ActiveView;
 import p1.enums.LabelEnum;
+import p1.enums.TableEnum;
 import p1.utils.FlowUtil;
 import p1.utils.OperationsUtil;
 
@@ -34,16 +35,20 @@ public class MListener extends MouseAdapter {
             }
         } else if (src instanceof JTable) {
             JTable table = (JTable) src;
-            Point p = event.getPoint();
-            int row = table.rowAtPoint(p);
-            if (event.getClickCount() == 2) {
-                TableModel model = table.getModel();
-                Project project = new Project();
-                project.setId((int) model.getValueAt(row, 0));
-                project.setProjectName((String) model.getValueAt(row, 1));
-                project.setPath((String) model.getValueAt(row, 2));
-                project.setDateAdded((Date) model.getValueAt(row, 3));
-                flowUtil.defineProjectView(project);
+            if (table.getName().equals(TableEnum.PROJECT_TABLE.name())) {
+                Point p = event.getPoint();
+                int row = table.rowAtPoint(p);
+                if (event.getClickCount() == 2) {
+                    TableModel model = table.getModel();
+                    Project project = new Project();
+                    project.setId((int) model.getValueAt(row, 0));
+                    project.setProjectName((String) model.getValueAt(row, 1));
+                    project.setPath((String) model.getValueAt(row, 2));
+                    project.setDateAdded((Date) model.getValueAt(row, 3));
+                    flowUtil.defineProjectView(project);
+                }
+            } else if (table.getName().equals(TableEnum.RELEASE_TABLE.name())){
+                
             }
         }
     }

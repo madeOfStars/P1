@@ -6,7 +6,15 @@ package p1.enums;
  */
 public enum MenuEnum {
     FILE(1, "File"),
-    NEW_PRJ(11, "Add New project");
+    PROJECT(10,"Project"),
+    NEW_PRJ(101, "Add New project"),
+    EDIT_PRJ(102, "Edit project"),
+    DEL_PRJ(103, "Delete project"),
+    RELEASE(11, "Release"),
+    NEW_RLS(101, "Add New release"),
+    EDIT_RLS(102, "Edit release"),
+    DEL_RLS(103, "Delete release"),
+    EXIT(999,"Exit");
 
     private int id;
     private String label;

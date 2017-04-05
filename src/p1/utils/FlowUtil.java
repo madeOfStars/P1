@@ -7,8 +7,10 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import p1.enums.ActiveView;
 import p1.enums.ContainerPositionEnum;
 import p1.enums.LabelEnum;
+import p1.enums.TableEnum;
 import p1.panels.FullListView;
 import p1.panels.HeaderTemplate;
 import p1.panels.NoItemPanel;
@@ -26,6 +28,7 @@ public class FlowUtil {
     private final DatabaseUtil databaseUtil = DatabaseUtil.getInstance();
 
     private Project currentProject;
+    private ActiveView activeView;
 
     public Container getCp() {
         return cp;
@@ -50,11 +53,12 @@ public class FlowUtil {
         clean();
         if (databaseUtil.getAllProjects() != null && databaseUtil.getAllProjects().size() > 0) {
             setView(new HeaderTemplate("All Projects"));
-            setView(new FullListView().getPanel());
+            setView(new FullListView(TableEnum.PROJECT_TABLE).getPanel());
             getCp().setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
         } else {
             setView(new NoProjectsPanel(), ContainerPositionEnum.NORTH.getLocation());
         }
+        this.activeView=ActiveView.PROJECT_VIEW;
     }
 
     public void defineProjectView(Project project) {
@@ -63,19 +67,22 @@ public class FlowUtil {
         OperationsUtil ou = OperationsUtil.getInstance();
         List<Release> lista = ou.getAllReleases(project);
         if (lista != null && lista.size() > 0) {
-
+            setView(new HeaderTemplate("All Releases"));
+            setView(new FullListView(TableEnum.RELEASE_TABLE).getPanel());
+            getCp().setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
         } else {
             setView(new HeaderTemplate(project.getProjectName()));
             setView(new NoItemPanel(LabelEnum.NEW_RELEASE_LBL.name(), LabelEnum.NEW_RELEASE_LBL.getMessage()));
         }
-
+        this.activeView=ActiveView.RELEASE_VIEW;
     }
 
     public void addNewRelease() {
         String code = JOptionPane.showInputDialog(getCp(), "Enter Release Code");
         if (code != null) {
             int intCode = Integer.parseInt(code);
-            OperationsUtil.getInstance().addNewRelease(currentProject, intCode);
+            OperationsUtil.getInstance().popUpMessages(OperationsUtil.getInstance().addNewRelease(currentProject, intCode), "Release Successfully Added", "Release Failed To Be Added", ActiveView.PROJECT_VIEW);
+            defineProjectView(currentProject);
         }
     }
 
@@ -91,4 +98,21 @@ public class FlowUtil {
         getCp().removeAll();
         getCp().revalidate();
     }
+
+    public Project getCurrentProject() {
+        return currentProject;
+    }
+
+    public void setCurrentProject(Project currentProject) {
+        this.currentProject = currentProject;
+    }
+
+    public ActiveView getActiveView() {
+        return activeView;
+    }
+
+    public void setActiveView(ActiveView activeView) {
+        this.activeView = activeView;
+    }
+
 }

@@ -24,14 +24,31 @@ public class FullListView extends FullListViewHelper implements Returnable{
     private final JPanel mainPanel=new JPanel();
     
     public FullListView(){
-        this(new String[]{"ID", "Project Name", "Path", "Date Added"}, TableEnum.PROJECT_TABLE);
+    }
+    
+    public FullListView(TableEnum tableEnum){
+        this(tableEnum.getColumns(), tableEnum);
     }
     
     public FullListView(String []columns, TableEnum tableEnum) {
         super(columns,tableEnum);
+        switch (tableEnum){
+            case PROJECT_TABLE:{
+                setProjectTable();
+                break;
+            }
+            case RELEASE_TABLE: {
+                setReleaseTable();
+                break;
+            }
+        }
+    }
+    
+    private void setProjectTable(){
         JPanel tablePanel = new JPanel();
         fillJTable();
         jTable = new JTable();
+        jTable.setName(getTableEnum().name());
         jTable.setModel(new CellEditable(getData(), getColumns()));
         jTable.setRowHeight(50);
         jTable.setShowVerticalLines(false);
@@ -40,6 +57,28 @@ public class FullListView extends FullListViewHelper implements Returnable{
         jTable.addMouseListener(new MListener());
         jTable.removeColumn(jTable.getColumnModel().getColumn(0));
         jTable.removeColumn(jTable.getColumnModel().getColumn(1));
+        //jTable.setSize(250, 600);
+        JScrollPane jsp = new JScrollPane(jTable);
+        jsp.setBorder(BorderFactory.createEmptyBorder());
+        //jsp.setSize(250, 650);
+        tablePanel.add(jsp);
+        mainPanel.add(tablePanel);
+    }
+    
+    private void setReleaseTable(){
+        JPanel tablePanel = new JPanel();
+        fillJTable();
+        jTable = new JTable();
+        jTable.setName(getTableEnum().name());
+        jTable.setModel(new CellEditable(getData(), getColumns()));
+        jTable.setRowHeight(50);
+        jTable.setShowVerticalLines(false);
+        jTable.setFont(FontEnum.TABLE_CONTENT.getFont());
+        jTable.getTableHeader().setFont(FontEnum.TABLE_HEADER.getFont());
+        jTable.addMouseListener(new MListener());
+        jTable.removeColumn(jTable.getColumnModel().getColumn(0));
+        jTable.removeColumn(jTable.getColumnModel().getColumn(2));
+        jTable.removeColumn(jTable.getColumnModel().getColumn(2));
         //jTable.setSize(250, 600);
         JScrollPane jsp = new JScrollPane(jTable);
         jsp.setBorder(BorderFactory.createEmptyBorder());

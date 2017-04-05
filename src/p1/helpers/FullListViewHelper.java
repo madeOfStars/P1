@@ -6,10 +6,13 @@
 package p1.helpers;
 
 import entity.Project;
+import entity.Release;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import p1.enums.TableEnum;
 import p1.utils.DatabaseUtil;
+import p1.utils.FlowUtil;
+import p1.utils.OperationsUtil;
 
 /**
  *
@@ -43,6 +46,18 @@ public class FullListViewHelper {
                 }
                 break;
             }
+            case RELEASE_TABLE: {
+                List<Release> lista = OperationsUtil.getInstance().getAllReleases(FlowUtil.getInstance().getCurrentProject());
+                data = new Object[lista.size()][5];
+                for (int i = 0; i < lista.size(); i++) {
+                    data[i][0] = lista.get(i).getId();
+                    data[i][1] = lista.get(i).getCode();
+                    data[i][2] = lista.get(i).getDateAdded();
+                    data[i][3] = lista.get(i).getClosed();
+                    data[i][4] = lista.get(i).getDateClosed();
+                }
+                break;
+            }
         }
     }
 
@@ -72,6 +87,14 @@ public class FullListViewHelper {
 
     protected void setColumns(String[] columns) {
         this.columns = columns;
+    }
+
+    protected TableEnum getTableEnum() {
+        return tableEnum;
+    }
+
+    protected void setTableEnum(TableEnum tableEnum) {
+        this.tableEnum = tableEnum;
     }
 
 }

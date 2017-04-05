@@ -62,7 +62,7 @@ public class OperationsUtil {
             return;
         }
         if (success) {
-            JOptionPane.showMessageDialog(null, messageOK, "Success", JOptionPane.DEFAULT_OPTION, this.getIcon(ImageEnum.OK));
+            JOptionPane.showMessageDialog(flowUtil.getCp(), messageOK, "Success", JOptionPane.DEFAULT_OPTION, this.getIcon(ImageEnum.OK));
             switch (activeView){
                 case PROJECT_VIEW:
                     FlowUtil.getInstance().defineFirstView();
@@ -80,6 +80,16 @@ public class OperationsUtil {
     }
 
     public boolean addNewRelease(Project project, int releaseCode) {
-        return databaseUtil.addNewRelease(project, releaseCode);
+        return databaseUtil.addNewRelease(project, releaseCode) && addReleaseFolder(releaseCode);
+    }
+    
+    private boolean addReleaseFolder(int releaseCode){
+        File f=new File("C:\\releases\\"+releaseCode+"");
+        if (!f.exists()){
+            f.mkdir();
+            return true;
+        } else {
+            return false;
+        }
     }
 }

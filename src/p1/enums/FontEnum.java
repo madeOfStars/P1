@@ -14,7 +14,8 @@ import java.awt.Font;
 public enum FontEnum {
     HEADER(new Font("Courier New", Font.PLAIN, 22)),
     TABLE_CONTENT(new Font("Courier New", Font.PLAIN, 15)),
-    TABLE_HEADER(new Font("Courier New", Font.BOLD, 18));;
+    TABLE_HEADER(new Font("Courier New", Font.BOLD, 18)),
+    CONTENT(new Font("Courier New", Font.BOLD, 12));
     
     private String family;
     private int style;
