@@ -10,6 +10,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import p1.dialogs.EditProjectDialog;
 import p1.enums.ActiveView;
 import p1.enums.MenuEnum;
 import p1.utils.FlowUtil;
@@ -51,6 +52,7 @@ public class MainFrame extends JFrame {
         prj.add(newPrj);
         newPrj.addActionListener(mListener);
         JMenuItem editPrj = new JMenuItem(MenuEnum.EDIT_PRJ.getLabel());
+        editPrj.setName(MenuEnum.EDIT_PRJ.name());
         prj.add(editPrj);
         editPrj.addActionListener(mListener);
         JMenuItem delPrj = new JMenuItem(MenuEnum.DEL_PRJ.getLabel());
@@ -96,6 +98,9 @@ public class MainFrame extends JFrame {
             if (temp.getName().equals(MenuEnum.NEW_PRJ.name())) {
                 Boolean newPrj = op.addNewProject();
                 op.popUpMessages(newPrj, "Project Successfully Added", "Project Failed To Be Added", ActiveView.PROJECT_VIEW);
+            } else if (temp.getName().equals(MenuEnum.EDIT_PRJ.name())){
+                EditProjectDialog epd=new EditProjectDialog(MainFrame.this, MenuEnum.EDIT_PRJ.getLabel());
+                epd.setVisible(true);
             } else if (temp.getName().equals(MenuEnum.EXIT.name())){
                 System.exit(0);
             }

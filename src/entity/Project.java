@@ -97,6 +97,8 @@ public class Project implements java.io.Serializable {
         this.projectReleases = projectReleases;
     }
 
-    //https://dzone.com/tutorials/java/hibernate/hibernate-example/hibernate-mapping-one-to-many-using-annotations-1.html
-    //http://docs.jboss.org/hibernate/orm/3.6/reference/en-US/html_single/#example-one-to-many-with-join-table
+    @Override
+    public String toString(){
+        return this.getProjectName();
+    }
 }
