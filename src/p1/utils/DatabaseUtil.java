@@ -53,6 +53,7 @@ public class DatabaseUtil {
         String hql="FROM Project";
         Query q=sp.getSession().createQuery(hql);
         List<Project> lista=q.list();
+        sp.getSession().close();
         return lista;
     }
     
@@ -65,6 +66,7 @@ public class DatabaseUtil {
         Query q=sp.getSession().createQuery(hql);
         q.setParameter("id", p.getId());
         List<Release> lista=q.list();
+        sp.getSession().close();
         return lista;
     }
     
@@ -76,6 +78,20 @@ public class DatabaseUtil {
             project.setProjectReleases(list);
             sp.getSession().update(project);
             sp.getTx().commit();;
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        } finally {
+            sp.getSession().close();
+        }
+    }
+    
+    public boolean updateProject(Project p){
+        SessionPackage sp=new SessionPackage();
+        try {
+            sp.getSession().update(p);
+            sp.getTx().commit();
             return true;
         } catch (Exception e){
             e.printStackTrace();

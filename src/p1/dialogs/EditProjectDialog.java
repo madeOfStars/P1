@@ -6,16 +6,13 @@
 package p1.dialogs;
 
 import entity.Project;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.List;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -24,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import p1.enums.ContainerPositionEnum;
 import p1.utils.DatabaseUtil;
+import p1.utils.FlowUtil;
 import p1.utils.OperationsUtil;
 
 /**
@@ -34,8 +32,8 @@ public class EditProjectDialog extends DialogHelper {
 
     private final JComboBox<Project> cb;
     private List<Project> completeList;
-    private JTextField prjNameTF = new JTextField();
-    private JTextField prjPathTf = new JTextField();
+    private final JTextField prjNameTF = new JTextField();
+    private final JTextField prjPathTf = new JTextField();
     private final JButton okBtn;
     private final JButton cancelBtn;
 
@@ -80,7 +78,9 @@ public class EditProjectDialog extends DialogHelper {
         changable.add(new JPanel());
         controllers = new JPanel(new GridLayout(1, 2));
         okBtn = new JButton("OK");
+        okBtn.addActionListener(lpl);
         cancelBtn = new JButton("Cancel");
+        cancelBtn.addActionListener(lpl);
         controllers.add(okBtn);
         controllers.add(cancelBtn);
 
@@ -98,6 +98,11 @@ public class EditProjectDialog extends DialogHelper {
         }
     }
 
+    private void exit() {
+        EditProjectDialog.this.setVisible(false);
+        EditProjectDialog.this.dispose();
+    }
+
     private class LocalProjectLister implements ActionListener {
 
         @Override
@@ -106,21 +111,32 @@ public class EditProjectDialog extends DialogHelper {
             if (src instanceof JComboBox) {
                 JComboBox<Project> combo = (JComboBox<Project>) src;
                 Project selectedProject = (Project) combo.getSelectedItem();
-
+                FlowUtil.getInstance().setCurrentProject(selectedProject);
                 prjNameTF.setText(selectedProject.getProjectName());
-                //prjNameTF.setPreferredSize(new Dimension(100, 20));
                 prjPathTf.setText(selectedProject.getPath());
             } else {
-
+                if (src == okBtn) {
+                    Project p = FlowUtil.getInstance().getCurrentProject();
+                    p.setProjectName(prjNameTF.getText());
+                    p.setPath(prjPathTf.getText());
+                    exit();
+                    OperationsUtil.getInstance().updateProject(p);
+                } else {
+                    exit();
+                }
             }
         }
 
     }
-    
-    private class LocalMouseAdapter extends MouseAdapter{
+
+    private class LocalMouseAdapter extends MouseAdapter {
+
         @Override
-        public void mouseClicked(MouseEvent event){
-            
+        public void mouseClicked(MouseEvent event) {
+            File f = OperationsUtil.getInstance().chooseFile();
+            if (f != null) {
+                prjPathTf.setText(f.getPath());
+            }
         }
     }
 }

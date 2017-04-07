@@ -30,8 +30,8 @@ public class OperationsUtil {
         }
         return operationsUtil;
     }
-
-    public Boolean addNewProject() {
+    
+    public File chooseFile(){
         JFileChooser chooser = new JFileChooser("D:/U/ujava/TestDirForP1");
         chooser.setDialogTitle("Choose Project");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -39,11 +39,20 @@ public class OperationsUtil {
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File file = chooser.getSelectedFile();
             System.out.println(file.getName());
-            return databaseUtil.addNewProject(file);
+            return file;
         } else if (returnValue == JFileChooser.CANCEL_OPTION) {
             return null;
         }
-        return false;
+        return null;
+    }
+
+    public Boolean addNewProject() {
+        File f=chooseFile();
+        if (f!=null){
+            return databaseUtil.addNewProject(f);
+        } else {
+            return null;
+        }
     }
 
     private ImageIcon getIcon(ImageEnum imageEnum) {
@@ -91,5 +100,10 @@ public class OperationsUtil {
         } else {
             return false;
         }
+    }
+    
+    public void updateProject(Project p){
+        popUpMessages(databaseUtil.updateProject(p), "Project Updated Successfully", "Project Failed To Update", ActiveView.PROJECT_VIEW);
+        flowUtil.defineFirstView();
     }
 }
