@@ -67,11 +67,11 @@ public class FlowUtil {
         OperationsUtil ou = OperationsUtil.getInstance();
         List<Release> lista = ou.getAllReleases(project);
         if (lista != null && lista.size() > 0) {
-            setView(new HeaderTemplate("All Releases"));
+            setView(new HeaderTemplate("All Releases",true));
             setView(new FullListView(TableEnum.RELEASE_TABLE).getPanel());
             getCp().setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
         } else {
-            setView(new HeaderTemplate(project.getProjectName()));
+            setView(new HeaderTemplate(project.getProjectName(),true));
             setView(new NoItemPanel(LabelEnum.NEW_RELEASE_LBL.name(), LabelEnum.NEW_RELEASE_LBL.getMessage()));
         }
         this.activeView=ActiveView.RELEASE_VIEW;

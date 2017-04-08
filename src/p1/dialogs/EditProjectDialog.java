@@ -5,6 +5,7 @@
  */
 package p1.dialogs;
 
+import p1.dialogs.helpers.DialogHelper;
 import entity.Project;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -20,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import p1.enums.ContainerPositionEnum;
+import p1.enums.FontEnum;
 import p1.utils.DatabaseUtil;
 import p1.utils.FlowUtil;
 import p1.utils.OperationsUtil;
@@ -48,14 +50,18 @@ public class EditProjectDialog extends DialogHelper {
         setSize(650, 350);
         JPanel header = new JPanel(new GridLayout(1, 2));
         JLabel lbl = new JLabel("Select Project");
+        lbl.setFont(FontEnum.CONTENT.getFont());
         header.add(lbl);
         cb = new JComboBox();
+        cb.setFont(FontEnum.CONTENT.getFont());
         cb.addActionListener(new LocalProjectLister());
         getProjectList();
         header.add(cb);
         changable = new JPanel(new GridLayout(10, 2));
         JLabel prjNameL = new JLabel("Project Name");
+        prjNameL.setFont(FontEnum.CONTENT.getFont());
         JLabel prjPathL = new JLabel("Project Path");
+        prjPathL.setFont(FontEnum.CONTENT.getFont());
         changable.add(new JPanel());
         changable.add(new JPanel());
         changable.add(new JPanel());
@@ -65,7 +71,9 @@ public class EditProjectDialog extends DialogHelper {
         changable.add(new JPanel());
         changable.add(new JPanel());
         changable.add(prjNameL);
+        prjNameTF.setFont(FontEnum.CONTENT.getFont());
         changable.add(prjNameTF);
+        prjPathTf.setFont(FontEnum.CONTENT.getFont());
         changable.add(prjPathL);
         changable.add(prjPathTf);
         changable.add(new JPanel());
@@ -81,7 +89,9 @@ public class EditProjectDialog extends DialogHelper {
         okBtn.addActionListener(lpl);
         cancelBtn = new JButton("Cancel");
         cancelBtn.addActionListener(lpl);
+        okBtn.setFont(FontEnum.CONTENT.getFont());
         controllers.add(okBtn);
+        cancelBtn.setFont(FontEnum.CONTENT.getFont());
         controllers.add(cancelBtn);
 
         cb.addActionListener(lpl);
@@ -99,8 +109,7 @@ public class EditProjectDialog extends DialogHelper {
     }
 
     private void exit() {
-        EditProjectDialog.this.setVisible(false);
-        EditProjectDialog.this.dispose();
+        OperationsUtil.getInstance().exitDialog(this);
     }
 
     private class LocalProjectLister implements ActionListener {

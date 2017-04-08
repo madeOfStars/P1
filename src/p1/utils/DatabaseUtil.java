@@ -100,4 +100,15 @@ public class DatabaseUtil {
             sp.getSession().close();
         }
     }
+    
+    public boolean deleteProjects(List<Integer> lista){
+        SessionPackage sp=new SessionPackage();
+        String qry="delete Project where id in (:ids)";
+        Query q=sp.getSession().createQuery(qry);
+        q.setParameterList("ids", lista);
+        int nr = q.executeUpdate();
+        sp.getTx().commit();
+        sp.getSession().close();
+        return nr>0;
+    }
 }

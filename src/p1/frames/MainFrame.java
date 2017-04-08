@@ -1,18 +1,23 @@
 package p1.frames;
 
+import entity.Project;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import p1.dialogs.DeleteDialog;
 import p1.dialogs.EditProjectDialog;
 import p1.enums.ActiveView;
+import p1.enums.FontEnum;
 import p1.enums.MenuEnum;
+import p1.utils.DatabaseUtil;
 import p1.utils.FlowUtil;
 import p1.utils.OperationsUtil;
 
@@ -27,7 +32,7 @@ public class MainFrame extends JFrame {
     private JMenu rls;
 
     public MainFrame() {
-        setSize(700, 500);
+        setSize(700, 600);
         addWindowListener(new WindowCloser());
         FlowUtil flowUtil = FlowUtil.getInstance();
         flowUtil.setCp(this.getContentPane());
@@ -40,22 +45,28 @@ public class MainFrame extends JFrame {
         MenuItemListener mListener = new MenuItemListener();
         MListener ml = new MListener();
         JMenu fileMenu = new JMenu(MenuEnum.FILE.getLabel());
+        fileMenu.setFont(FontEnum.CONTENT.getFont());
         fileMenu.setName(MenuEnum.FILE.name());
         fileMenu.addMenuListener(ml);
         menuBar.add(fileMenu);
 
         prj = new JMenu(MenuEnum.PROJECT.getLabel());
+        prj.setFont(FontEnum.CONTENT.getFont());
         fileMenu.add(prj);
 
         JMenuItem newPrj = new JMenuItem(MenuEnum.NEW_PRJ.getLabel());
         newPrj.setName(MenuEnum.NEW_PRJ.name());
+        newPrj.setFont(FontEnum.CONTENT.getFont());
         prj.add(newPrj);
         newPrj.addActionListener(mListener);
         JMenuItem editPrj = new JMenuItem(MenuEnum.EDIT_PRJ.getLabel());
         editPrj.setName(MenuEnum.EDIT_PRJ.name());
+        editPrj.setFont(FontEnum.CONTENT.getFont());
         prj.add(editPrj);
         editPrj.addActionListener(mListener);
         JMenuItem delPrj = new JMenuItem(MenuEnum.DEL_PRJ.getLabel());
+        delPrj.setName(MenuEnum.DEL_PRJ.name());
+        delPrj.setFont(FontEnum.CONTENT.getFont());
         prj.add(delPrj);
         delPrj.addActionListener(mListener);
 
@@ -101,6 +112,18 @@ public class MainFrame extends JFrame {
             } else if (temp.getName().equals(MenuEnum.EDIT_PRJ.name())){
                 EditProjectDialog epd=new EditProjectDialog(MainFrame.this, MenuEnum.EDIT_PRJ.getLabel());
                 epd.setVisible(true);
+            } else if (temp.getName().equals(MenuEnum.DEL_PRJ.name())){
+                switch (FlowUtil.getInstance().getActiveView()){
+                    case PROJECT_VIEW:{
+                        List<Project> lista=DatabaseUtil.getInstance().getAllProjects();
+                        DeleteDialog<Project> deleteDialog=new DeleteDialog<>(MainFrame.this,"Select Projects To be Deleted",lista);
+                        deleteDialog.setVisible(true);
+                        break;
+                    }
+                    case RELEASE_VIEW: {
+                        break;
+                    }
+                }
             } else if (temp.getName().equals(MenuEnum.EXIT.name())){
                 System.exit(0);
             }

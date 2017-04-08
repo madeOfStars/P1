@@ -5,6 +5,7 @@ import entity.Release;
 import java.io.File;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import p1.enums.ActiveView;
@@ -55,13 +56,19 @@ public class OperationsUtil {
         }
     }
 
-    private ImageIcon getIcon(ImageEnum imageEnum) {
+    public ImageIcon getIcon(ImageEnum imageEnum) {
         switch (imageEnum) {
             case OK:
                 return new ImageIcon(ImageEnum.OK.getPath(), ImageEnum.OK.getAlt());
 
             case FAIL:
                 return new ImageIcon(ImageEnum.FAIL.getPath(), ImageEnum.FAIL.getAlt());
+                
+            case HOME:
+                return new ImageIcon(ImageEnum.HOME.getPath(), ImageEnum.HOME.getAlt());
+                
+            case BACK:
+                return new ImageIcon(ImageEnum.BACK.getPath(),ImageEnum.BACK.getAlt());
         }
         return null;
     }
@@ -102,8 +109,18 @@ public class OperationsUtil {
         }
     }
     
+    public void exitDialog(JDialog dialog){
+        dialog.setVisible(false);
+        dialog.dispose();
+    }
+    
     public void updateProject(Project p){
         popUpMessages(databaseUtil.updateProject(p), "Project Updated Successfully", "Project Failed To Update", ActiveView.PROJECT_VIEW);
+        flowUtil.defineFirstView();
+    }
+    
+    public void deleteProjects(List<Integer> lista){
+        popUpMessages(databaseUtil.deleteProjects(lista), "Project(s) deleted Successfully", "Failed to delete Project(s)", ActiveView.PROJECT_VIEW);
         flowUtil.defineFirstView();
     }
 }

@@ -12,7 +12,9 @@ package p1.enums;
 public enum ImageEnum {
 
     OK("resources/OK.png","OK"),
-    FAIL("resources/FAIL.png","FAIL");
+    FAIL("resources/FAIL.png","FAIL"),
+    HOME("resources/home2.png","HOME"),
+    BACK("resources/back2.png","BACK");
 
     private String path;
     private String alt;
