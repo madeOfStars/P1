@@ -2,13 +2,16 @@ package entity;
 // Generated Apr 2, 2017 9:11:23 AM by Hibernate Tools 4.3.1
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,6 +28,8 @@ public class Release implements java.io.Serializable {
     private Date dateAdded;
     private Integer closed;
     private Date dateClosed;
+    
+    private Project project;
 
     public Release() {
     }
@@ -97,11 +102,15 @@ public class Release implements java.io.Serializable {
         this.dateClosed = dateClosed;
     }
 
-    /*public Set getReleaseVersions() {
-        return this.releaseVersions;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "PROJECT_RELEASE", joinColumns = {
+        @JoinColumn(name = "RELEASE_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
+        @JoinColumn(name = "PROJECT_ID", referencedColumnName = "ID")})
+    public Project getProject() {
+        return project;
     }
 
-    public void setReleaseVersions(Set releaseVersions) {
-        this.releaseVersions = releaseVersions;
-    }*/
+    public void setProject(Project project) {
+        this.project = project;
+    }
 }

@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import p1.interfaces.Identifiable;
 
 /**
@@ -87,10 +89,11 @@ public class Project implements Identifiable, java.io.Serializable {
         this.dateAdded = dateAdded;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "PROJECT_RELEASE", joinColumns = {
-        @JoinColumn(name = "PROJECT_ID")}, inverseJoinColumns = {
-        @JoinColumn(name = "RELEASE_ID")})
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    /*@JoinTable(name = "PROJECT_RELEASE", joinColumns = {
+     @JoinColumn(name = "PROJECT_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
+     @JoinColumn(name = "RELEASE_ID", referencedColumnName = "ID")})*/
+    @Fetch(FetchMode.SELECT)
     public List<Release> getProjectReleases() {
         return projectReleases;
     }
@@ -100,7 +103,7 @@ public class Project implements Identifiable, java.io.Serializable {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.getProjectName();
     }
 
@@ -109,4 +112,5 @@ public class Project implements Identifiable, java.io.Serializable {
     public int getIdentifier() {
         return getId();
     }
+
 }
