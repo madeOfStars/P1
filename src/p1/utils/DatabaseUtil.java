@@ -56,10 +56,9 @@ public class DatabaseUtil {
 
     public List<Release> getAllReleases(Project p) {
         SessionPackage sp = new SessionPackage();
-        String hql = "select releases "
-                + "from Project p "
-                + " inner join p.projectReleases as releases "
-                + "where p.id=:id and releases.closed=0";
+        String hql = "select r "
+                + "from Release r "
+                + "where r.project.id=:id and r.closed=0";
         Query q = sp.getSession().createQuery(hql);
         q.setParameter("id", p.getId());
         List<Release> lista = q.list();
@@ -70,16 +69,10 @@ public class DatabaseUtil {
     public boolean addNewRelease(Project project, int codeRelease) {
         SessionPackage sp = new SessionPackage();
         try {
-            /*List<Release> list =new ArrayList<>();
-             list.add(new Release(codeRelease, new Date(), 0, null));
-             project.setProjectReleases(list);*/
-            //Project p=(Project)sp.getSession().get(Project.class, project.getId());
             Release rls = new Release(codeRelease, new Date(), 0, null);
-            //sp.getSession().save(rls);
             rls.setProject(project);
             sp.getSession().save(rls);
             sp.getTx().commit();
-            //sp.getSession().close();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
