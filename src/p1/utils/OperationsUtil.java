@@ -2,6 +2,7 @@ package p1.utils;
 
 import entity.Project;
 import entity.Release;
+import entity.Version;
 import java.io.File;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -96,17 +97,20 @@ public class OperationsUtil {
     }
 
     public boolean addNewRelease(Project project, int releaseCode) {
-        return databaseUtil.addNewRelease(project, releaseCode) && addReleaseFolder(releaseCode);
+        return databaseUtil.addNewRelease(project, releaseCode) && addReleaseFolder(project, releaseCode);
     }
     
-    private boolean addReleaseFolder(int releaseCode){
-        File f=new File("C:\\releases\\"+releaseCode+"");
+    private boolean addReleaseFolder(Project p, int releaseCode){
+        File f=new File("C:\\releases\\"+p.getProjectName()+"-"+releaseCode+"");
         if (!f.exists()){
-            f.mkdir();
-            return true;
+            return f.mkdir();
         } else {
-            return false;
+            return true;
         }
+    }
+    
+    public List<Version> getAllVersions(Release release){
+        return databaseUtil.getAllVersion(release);
     }
     
     public void exitDialog(JDialog dialog){

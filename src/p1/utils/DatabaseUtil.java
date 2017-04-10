@@ -2,6 +2,7 @@ package p1.utils;
 
 import entity.Project;
 import entity.Release;
+import entity.Version;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
@@ -105,5 +106,21 @@ public class DatabaseUtil {
         sp.getTx().commit();
         sp.getSession().close();
         return nr > 0;
+    }
+    
+    public List<Version> getAllVersion(Release release){
+        SessionPackage sp = new SessionPackage();
+        String hql = "select v "
+                + "from Version v "
+                + "where v.release.id=:id";
+        Query q = sp.getSession().createQuery(hql);
+        q.setParameter("id", release.getId());
+        List<Version> lista = q.list();
+        sp.getSession().close();
+        return lista;
+    }
+    
+    public <E> List<E> getAll(E component){
+        return null;
     }
 }

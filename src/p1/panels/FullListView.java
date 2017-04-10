@@ -41,6 +41,10 @@ public class FullListView extends FullListViewHelper implements Returnable{
                 setReleaseTable();
                 break;
             }
+            case VERSION_TABLE: {
+                setVersionTable();
+                break;
+            }
         }
     }
     
@@ -57,10 +61,8 @@ public class FullListView extends FullListViewHelper implements Returnable{
         jTable.addMouseListener(new MListener());
         jTable.removeColumn(jTable.getColumnModel().getColumn(0));
         jTable.removeColumn(jTable.getColumnModel().getColumn(1));
-        //jTable.setSize(250, 600);
         JScrollPane jsp = new JScrollPane(jTable);
         jsp.setBorder(BorderFactory.createEmptyBorder());
-        //jsp.setSize(250, 650);
         tablePanel.add(jsp);
         mainPanel.add(tablePanel);
     }
@@ -79,10 +81,26 @@ public class FullListView extends FullListViewHelper implements Returnable{
         jTable.removeColumn(jTable.getColumnModel().getColumn(0));
         jTable.removeColumn(jTable.getColumnModel().getColumn(2));
         jTable.removeColumn(jTable.getColumnModel().getColumn(2));
-        //jTable.setSize(250, 600);
         JScrollPane jsp = new JScrollPane(jTable);
         jsp.setBorder(BorderFactory.createEmptyBorder());
-        //jsp.setSize(250, 650);
+        tablePanel.add(jsp);
+        mainPanel.add(tablePanel);
+    }
+    
+    private void setVersionTable(){
+        JPanel tablePanel = new JPanel();
+        fillJTable();
+        jTable = new JTable();
+        jTable.setName(getTableEnum().name());
+        jTable.setModel(new CellEditable(getData(), getColumns()));
+        jTable.setRowHeight(50);
+        jTable.setShowVerticalLines(false);
+        jTable.setFont(FontEnum.TABLE_CONTENT.getFont());
+        jTable.getTableHeader().setFont(FontEnum.TABLE_HEADER.getFont());
+        jTable.addMouseListener(new MListener());
+        jTable.removeColumn(jTable.getColumnModel().getColumn(0));
+        JScrollPane jsp = new JScrollPane(jTable);
+        jsp.setBorder(BorderFactory.createEmptyBorder());
         tablePanel.add(jsp);
         mainPanel.add(tablePanel);
     }

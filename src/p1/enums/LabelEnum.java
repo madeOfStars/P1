@@ -11,7 +11,8 @@ package p1.enums;
  */
 public enum LabelEnum {
     NEW_PRJ_LBL("No Available Projects! Click here to add a new One"),
-    NEW_RELEASE_LBL("No Available Release! Click here to add a new One");
+    NEW_RELEASE_LBL("No Available Releases! Click here to add a new One"),
+    NEW_VERSION_LBL("No Available Versions! Click here to add a new One");
     
     private String message;
     

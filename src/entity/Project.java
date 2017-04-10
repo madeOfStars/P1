@@ -10,8 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -90,9 +88,6 @@ public class Project implements Identifiable, java.io.Serializable {
     }
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
-    /*@JoinTable(name = "PROJECT_RELEASE", joinColumns = {
-     @JoinColumn(name = "PROJECT_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
-     @JoinColumn(name = "RELEASE_ID", referencedColumnName = "ID")})*/
     @Fetch(FetchMode.SELECT)
     public List<Release> getProjectReleases() {
         return projectReleases;

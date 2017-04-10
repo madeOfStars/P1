@@ -12,7 +12,8 @@ package p1.enums;
 public enum TableEnum {
 
     PROJECT_TABLE(new String[]{"ID", "Project Name", "Path", "Date Added"}),
-    RELEASE_TABLE(new String[]{"ID", "Code", "Date Added", "Closed", "Date Closed"});
+    RELEASE_TABLE(new String[]{"ID", "Code", "Date Added", "Closed", "Date Closed"}),
+    VERSION_TABLE(new String[]{"ID", "Version Number", "Date Added"});
 
     private String[] columns;
 

@@ -2,6 +2,7 @@ package p1.utils;
 
 import entity.Project;
 import entity.Release;
+import entity.Version;
 import java.awt.Container;
 import java.util.List;
 import javax.swing.BoxLayout;
@@ -84,6 +85,21 @@ public class FlowUtil {
             OperationsUtil.getInstance().popUpMessages(OperationsUtil.getInstance().addNewRelease(currentProject, intCode), "Release Successfully Added", "Release Failed To Be Added", ActiveView.PROJECT_VIEW);
             defineProjectView(currentProject);
         }
+    }
+    
+    public void defineReleaseView(Release release){
+        clean();
+        OperationsUtil oUtil=OperationsUtil.getInstance();
+        List<Version> lista=oUtil.getAllVersions(release);
+        if (lista != null && lista.size() > 0) {
+            setView(new HeaderTemplate("All Versions",true));
+            setView(new FullListView(TableEnum.VERSION_TABLE).getPanel());
+            getCp().setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
+        } else {
+            setView(new HeaderTemplate(release.getCode()+"",true));
+            setView(new NoItemPanel(LabelEnum.NEW_VERSION_LBL.name(), LabelEnum.NEW_VERSION_LBL.getMessage()));
+        }
+        this.activeView=ActiveView.VERSION_VIEW;
     }
 
     public void setView(JPanel panel) {

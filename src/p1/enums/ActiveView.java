@@ -7,7 +7,8 @@ package p1.enums;
 public enum ActiveView {
 
     PROJECT_VIEW(null),
-    RELEASE_VIEW(ActiveView.PROJECT_VIEW);
+    RELEASE_VIEW(ActiveView.PROJECT_VIEW),
+    VERSION_VIEW(ActiveView.RELEASE_VIEW);
 
     private ActiveView previousViw;
 

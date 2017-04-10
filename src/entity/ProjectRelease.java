@@ -1,8 +1,6 @@
-package temp;
+package entity;
 // Generated Apr 2, 2017 9:29:14 AM by Hibernate Tools 4.3.1
 
-import entity.Project;
-import entity.Release;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

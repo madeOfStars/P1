@@ -1,6 +1,7 @@
 package p1.listeners;
 
 import entity.Project;
+import entity.Release;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -48,7 +49,18 @@ public class MListener extends MouseAdapter {
                     flowUtil.defineProjectView(project);
                 }
             } else if (table.getName().equals(TableEnum.RELEASE_TABLE.name())){
-                
+                Point p = event.getPoint();
+                int row = table.rowAtPoint(p);
+                if (event.getClickCount() == 2) {
+                    TableModel model=table.getModel();
+                    Release release=new Release();
+                    release.setId((int)model.getValueAt(row, 0));
+                    release.setCode((int)model.getValueAt(row, 1));
+                    release.setDateAdded((Date)model.getValueAt(row, 2));
+                    release.setClosed((int)model.getValueAt(row, 3));
+                    release.setDateClosed((Date)model.getValueAt(row, 4));
+                    flowUtil.defineReleaseView(release);
+                }
             }
         }
     }
