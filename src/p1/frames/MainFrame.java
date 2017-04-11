@@ -147,13 +147,18 @@ public class MainFrame extends JFrame {
             JMenu temp = (JMenu) src;
             if (temp.getName().equals(MenuEnum.FILE.name())) {
                 switch (FlowUtil.getInstance().getActiveView()) {
-                    case PROJECT_VIEW: {
+                    case HOME:{
                         prj.setEnabled(true);
                         rls.setEnabled(false);
                         break;
                     }
-                    case RELEASE_VIEW: {
+                    case PROJECT_VIEW: {
+                        prj.setEnabled(false);
                         rls.setEnabled(true);
+                        break;
+                    }
+                    case RELEASE_VIEW: {
+                        rls.setEnabled(false);
                         prj.setEnabled(false);
                         break;
                     }

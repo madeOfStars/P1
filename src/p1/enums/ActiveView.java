@@ -6,22 +6,23 @@ package p1.enums;
  */
 public enum ActiveView {
 
-    PROJECT_VIEW(null),
+    HOME(null),
+    PROJECT_VIEW(ActiveView.HOME),
     RELEASE_VIEW(ActiveView.PROJECT_VIEW),
     VERSION_VIEW(ActiveView.RELEASE_VIEW);
 
-    private ActiveView previousViw;
+    private ActiveView previousView;
 
     ActiveView(ActiveView previousView) {
-        this.previousViw = previousView;
+        this.previousView = previousView;
     }
 
-    public ActiveView getPreviousViw() {
-        return previousViw;
+    public ActiveView getPreviousView() {
+        return previousView;
     }
 
-    public void setPreviousViw(ActiveView previousViw) {
-        this.previousViw = previousViw;
+    public void setPreviousView(ActiveView previousView) {
+        this.previousView = previousView;
     }
 
 }

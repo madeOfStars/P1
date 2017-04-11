@@ -1,5 +1,7 @@
 package p1.listeners;
 
+import entity.Project;
+import entity.Release;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -29,9 +31,17 @@ public class BListener<E> implements ActionListener {
         if (src.getName().equals(ButtonEnum.HOME.name())) {
             FlowUtil.getInstance().defineFirstView();
         } else if (src.getName().equals(ButtonEnum.BACK.name())) {
-            switch (flowUtil.getActiveView().getPreviousViw()) {
-                case PROJECT_VIEW: {
+            switch (flowUtil.getActiveView().getPreviousView()) {
+                case HOME: {
                     flowUtil.defineFirstView();
+                    break;
+                }
+                case PROJECT_VIEW: {
+                    flowUtil.defineProjectView(((Release)element).getProject());
+                    break;
+                }
+                case RELEASE_VIEW: {
+                    flowUtil.defineReleaseView((Release)element);
                     break;
                 }
             }

@@ -59,7 +59,7 @@ public class FlowUtil {
         } else {
             setView(new NoProjectsPanel(), ContainerPositionEnum.NORTH.getLocation());
         }
-        this.activeView=ActiveView.PROJECT_VIEW;
+        this.activeView = ActiveView.HOME;
     }
 
     public void defineProjectView(Project project) {
@@ -68,14 +68,14 @@ public class FlowUtil {
         OperationsUtil ou = OperationsUtil.getInstance();
         List<Release> lista = ou.getAllReleases(project);
         if (lista != null && lista.size() > 0) {
-            setView(new HeaderTemplate("All Releases",true));
-            setView(new FullListView(TableEnum.RELEASE_TABLE).getPanel());
+            setView(new HeaderTemplate("All Releases", true, project));
+            setView(new FullListView(TableEnum.RELEASE_TABLE, project).getPanel());
             getCp().setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
         } else {
-            setView(new HeaderTemplate(project.getProjectName(),true));
+            setView(new HeaderTemplate(project.getProjectName(), true, project));
             setView(new NoItemPanel(LabelEnum.NEW_RELEASE_LBL.name(), LabelEnum.NEW_RELEASE_LBL.getMessage()));
         }
-        this.activeView=ActiveView.RELEASE_VIEW;
+        this.activeView = ActiveView.PROJECT_VIEW;
     }
 
     public void addNewRelease() {
@@ -86,20 +86,20 @@ public class FlowUtil {
             defineProjectView(currentProject);
         }
     }
-    
-    public void defineReleaseView(Release release){
+
+    public void defineReleaseView(Release release) {
         clean();
-        OperationsUtil oUtil=OperationsUtil.getInstance();
-        List<Version> lista=oUtil.getAllVersions(release);
+        OperationsUtil oUtil = OperationsUtil.getInstance();
+        List<Version> lista = oUtil.getAllVersions(release);
         if (lista != null && lista.size() > 0) {
-            setView(new HeaderTemplate("All Versions",true));
-            setView(new FullListView(TableEnum.VERSION_TABLE).getPanel());
+            setView(new HeaderTemplate("All Versions", true, release));
+            setView(new FullListView(TableEnum.VERSION_TABLE, release).getPanel());
             getCp().setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
         } else {
-            setView(new HeaderTemplate(release.getCode()+"",true));
+            setView(new HeaderTemplate(release.getCode() + "", true, release));
             setView(new NoItemPanel(LabelEnum.NEW_VERSION_LBL.name(), LabelEnum.NEW_VERSION_LBL.getMessage()));
         }
-        this.activeView=ActiveView.VERSION_VIEW;
+        this.activeView = ActiveView.RELEASE_VIEW;
     }
 
     public void setView(JPanel panel) {

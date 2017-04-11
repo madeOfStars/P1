@@ -18,12 +18,21 @@ import p1.utils.OperationsUtil;
 /**
  *
  * @author Ertjon
+ * @param <E>
  */
-public class MListener extends MouseAdapter {
+public class MListener<E> extends MouseAdapter {
 
     private final OperationsUtil operationsUtils = OperationsUtil.getInstance();
     private final FlowUtil flowUtil = FlowUtil.getInstance();
-
+    
+    private E element;
+    
+    public MListener(){}
+    
+    public MListener(E element){
+        this.element=element;
+    }
+    
     @Override
     public void mouseClicked(MouseEvent event) {
         Object src = event.getSource();
@@ -33,6 +42,8 @@ public class MListener extends MouseAdapter {
                 operationsUtils.popUpMessages(operationsUtils.addNewProject(), "Project Successfully Added", "Project Failed To Be Added", ActiveView.PROJECT_VIEW);
             } else if (temp.getName().equals(LabelEnum.NEW_RELEASE_LBL.name())) {
                 flowUtil.addNewRelease();
+            } else if (temp.getName().equals(LabelEnum.NEW_VERSION_LBL.name())){
+                
             }
         } else if (src instanceof JTable) {
             JTable table = (JTable) src;
@@ -59,6 +70,7 @@ public class MListener extends MouseAdapter {
                     release.setDateAdded((Date)model.getValueAt(row, 2));
                     release.setClosed((int)model.getValueAt(row, 3));
                     release.setDateClosed((Date)model.getValueAt(row, 4));
+                    release.setProject((Project)element);
                     flowUtil.defineReleaseView(release);
                 }
             }

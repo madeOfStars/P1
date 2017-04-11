@@ -18,20 +18,28 @@ import p1.listeners.MListener;
 /**
  *
  * @author Ertjon
+ * @param <E>
  */
-public class FullListView extends FullListViewHelper implements Returnable{
+public class FullListView<E> extends FullListViewHelper implements Returnable{
     private JTable jTable=null;
     private final JPanel mainPanel=new JPanel();
+    
+    private E element;
     
     public FullListView(){
     }
     
     public FullListView(TableEnum tableEnum){
-        this(tableEnum.getColumns(), tableEnum);
+        this(tableEnum, null);
     }
     
-    public FullListView(String []columns, TableEnum tableEnum) {
+    public FullListView(TableEnum tableEnum, E element){
+        this(tableEnum.getColumns(), tableEnum, element);
+    }
+    
+    public FullListView(String []columns, TableEnum tableEnum, E element) {
         super(columns,tableEnum);
+        this.element=element;
         switch (tableEnum){
             case PROJECT_TABLE:{
                 setProjectTable();
@@ -77,7 +85,7 @@ public class FullListView extends FullListViewHelper implements Returnable{
         jTable.setShowVerticalLines(false);
         jTable.setFont(FontEnum.TABLE_CONTENT.getFont());
         jTable.getTableHeader().setFont(FontEnum.TABLE_HEADER.getFont());
-        jTable.addMouseListener(new MListener());
+        jTable.addMouseListener(new MListener(element));
         jTable.removeColumn(jTable.getColumnModel().getColumn(0));
         jTable.removeColumn(jTable.getColumnModel().getColumn(2));
         jTable.removeColumn(jTable.getColumnModel().getColumn(2));

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package p1.panels;
 
 import java.awt.GridLayout;
@@ -19,11 +14,14 @@ import p1.utils.OperationsUtil;
  *
  * @author Ertjon
  */
-public class HeaderTemplate extends JPanel {
+public class HeaderTemplate<E> extends JPanel {
 
     private JPanel homePanel;
     private JPanel backPanel;
     private JPanel msgPanel;
+
+    private JButton homeBtn;
+    private JButton backBtn;
 
     public HeaderTemplate(String message) {
         JLabel msg = new JLabel(message);
@@ -37,16 +35,16 @@ public class HeaderTemplate extends JPanel {
         this.add(msgPanel);
     }
 
-    public HeaderTemplate(String message, boolean composed) {
+    public HeaderTemplate(String message, boolean composed, E element) {
         this(message);
         if (composed) {
             clean();
-            BListener bListener=new BListener();
-            JButton homeBtn = new JButton(OperationsUtil.getInstance().getIcon(ImageEnum.HOME));
+            BListener bListener = getBListener(element);
+            homeBtn = new JButton(OperationsUtil.getInstance().getIcon(ImageEnum.HOME));
             homeBtn.setName(ButtonEnum.HOME.name());
             homeBtn.setFont(FontEnum.CONTENT.getFont());
             homeBtn.addActionListener(bListener);
-            JButton backBtn = new JButton(OperationsUtil.getInstance().getIcon(ImageEnum.BACK));
+            backBtn = new JButton(OperationsUtil.getInstance().getIcon(ImageEnum.BACK));
             backBtn.setName(ButtonEnum.BACK.name());
             backBtn.setFont(FontEnum.CONTENT.getFont());
             backBtn.addActionListener(bListener);
@@ -61,5 +59,15 @@ public class HeaderTemplate extends JPanel {
     private void clean() {
         this.removeAll();;
         this.revalidate();;
+    }
+
+    private BListener getBListener(E element) {
+        BListener bListener = null;
+        if (element != null) {
+            bListener = new BListener(element);
+        } else {
+            bListener = new BListener();
+        }
+        return bListener;
     }
 }
