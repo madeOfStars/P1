@@ -2,7 +2,7 @@ package p1.utils;
 
 import entity.Project;
 import entity.Release;
-import entity.Version;
+import entity.Revision;
 import java.awt.Container;
 import java.util.List;
 import javax.swing.BoxLayout;
@@ -90,16 +90,26 @@ public class FlowUtil {
     public void defineReleaseView(Release release) {
         clean();
         OperationsUtil oUtil = OperationsUtil.getInstance();
-        List<Version> lista = oUtil.getAllVersions(release);
+        List<Revision> lista = oUtil.getAllVersions(release);
         if (lista != null && lista.size() > 0) {
             setView(new HeaderTemplate("All Versions", true, release));
             setView(new FullListView(TableEnum.VERSION_TABLE, release).getPanel());
             getCp().setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
         } else {
             setView(new HeaderTemplate(release.getCode() + "", true, release));
-            setView(new NoItemPanel(LabelEnum.NEW_VERSION_LBL.name(), LabelEnum.NEW_VERSION_LBL.getMessage()));
+            setView(new NoItemPanel(LabelEnum.NEW_REVISION_LBL.name(), LabelEnum.NEW_REVISION_LBL.getMessage()));
         }
         this.activeView = ActiveView.RELEASE_VIEW;
+    }
+
+    public void closeRelease(Release release) {
+        int response = JOptionPane.showConfirmDialog(getCp(), "Do you want to close this release?", "Confirm",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        
+        if (response==JOptionPane.YES_OPTION){
+            OperationsUtil.getInstance().popUpMessages(OperationsUtil.getInstance().closeRelease(release), "Release Closed Successfully", "Failed to closse Release", ActiveView.RELEASE_VIEW);
+            defineProjectView(release.getProject());
+        }
     }
 
     public void setView(JPanel panel) {

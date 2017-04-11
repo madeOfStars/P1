@@ -2,7 +2,7 @@ package p1.utils;
 
 import entity.Project;
 import entity.Release;
-import entity.Version;
+import entity.Revision;
 import java.io.File;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -70,6 +70,9 @@ public class OperationsUtil {
                 
             case BACK:
                 return new ImageIcon(ImageEnum.BACK.getPath(),ImageEnum.BACK.getAlt());
+              
+            case CLOSE:
+                return new ImageIcon(ImageEnum.CLOSE.getPath(),ImageEnum.CLOSE.getAlt());
         }
         return null;
     }
@@ -109,7 +112,11 @@ public class OperationsUtil {
         }
     }
     
-    public List<Version> getAllVersions(Release release){
+    public boolean closeRelease(Release release){
+        return databaseUtil.closeRelease(release);
+    }
+    
+    public List<Revision> getAllVersions(Release release){
         return databaseUtil.getAllVersion(release);
     }
     

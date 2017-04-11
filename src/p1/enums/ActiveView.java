@@ -9,7 +9,7 @@ public enum ActiveView {
     HOME(null),
     PROJECT_VIEW(ActiveView.HOME),
     RELEASE_VIEW(ActiveView.PROJECT_VIEW),
-    VERSION_VIEW(ActiveView.RELEASE_VIEW);
+    REVISION_VIEW(ActiveView.RELEASE_VIEW);
 
     private ActiveView previousView;
 

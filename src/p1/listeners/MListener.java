@@ -12,6 +12,7 @@ import javax.swing.table.TableModel;
 import p1.enums.ActiveView;
 import p1.enums.LabelEnum;
 import p1.enums.TableEnum;
+import p1.helpers.MouseListenerHelper;
 import p1.utils.FlowUtil;
 import p1.utils.OperationsUtil;
 
@@ -20,19 +21,20 @@ import p1.utils.OperationsUtil;
  * @author Ertjon
  * @param <E>
  */
-public class MListener<E> extends MouseAdapter {
+public class MListener<E> extends MouseListenerHelper {
 
     private final OperationsUtil operationsUtils = OperationsUtil.getInstance();
     private final FlowUtil flowUtil = FlowUtil.getInstance();
-    
+
     private E element;
-    
-    public MListener(){}
-    
-    public MListener(E element){
-        this.element=element;
+
+    public MListener() {
     }
-    
+
+    public MListener(E element) {
+        this.element = element;
+    }
+
     @Override
     public void mouseClicked(MouseEvent event) {
         Object src = event.getSource();
@@ -42,8 +44,8 @@ public class MListener<E> extends MouseAdapter {
                 operationsUtils.popUpMessages(operationsUtils.addNewProject(), "Project Successfully Added", "Project Failed To Be Added", ActiveView.PROJECT_VIEW);
             } else if (temp.getName().equals(LabelEnum.NEW_RELEASE_LBL.name())) {
                 flowUtil.addNewRelease();
-            } else if (temp.getName().equals(LabelEnum.NEW_VERSION_LBL.name())){
-                
+            } else if (temp.getName().equals(LabelEnum.NEW_REVISION_LBL.name())) {
+
             }
         } else if (src instanceof JTable) {
             JTable table = (JTable) src;
@@ -59,19 +61,20 @@ public class MListener<E> extends MouseAdapter {
                     project.setDateAdded((Date) model.getValueAt(row, 3));
                     flowUtil.defineProjectView(project);
                 }
-            } else if (table.getName().equals(TableEnum.RELEASE_TABLE.name())){
+            } else if (table.getName().equals(TableEnum.RELEASE_TABLE.name())) {
                 Point p = event.getPoint();
                 int row = table.rowAtPoint(p);
-                if (event.getClickCount() == 2) {
-                    TableModel model=table.getModel();
-                    Release release=new Release();
-                    release.setId((int)model.getValueAt(row, 0));
-                    release.setCode((int)model.getValueAt(row, 1));
-                    release.setDateAdded((Date)model.getValueAt(row, 2));
-                    release.setClosed((int)model.getValueAt(row, 3));
-                    release.setDateClosed((Date)model.getValueAt(row, 4));
-                    release.setProject((Project)element);
-                    flowUtil.defineReleaseView(release);
+                int column = table.columnAtPoint(p);
+                TableModel model = table.getModel();
+                Release release = creteRelease(model, row, (Project) element);
+                if (event.getClickCount() == 1) {
+                    if (column == 2) {
+                        flowUtil.closeRelease(release);
+                    }
+                } else if (event.getClickCount() == 2) {
+                    if (column != 2) {
+                        flowUtil.defineReleaseView(release);
+                    }
                 }
             }
         }

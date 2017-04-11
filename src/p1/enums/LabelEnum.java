@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package p1.enums;
 
 /**
@@ -12,7 +7,7 @@ package p1.enums;
 public enum LabelEnum {
     NEW_PRJ_LBL("No Available Projects! Click here to add a new One"),
     NEW_RELEASE_LBL("No Available Releases! Click here to add a new One"),
-    NEW_VERSION_LBL("No Available Versions! Click here to add a new One");
+    NEW_REVISION_LBL("No Available Revisions! Click here to add a new One");
     
     private String message;
     

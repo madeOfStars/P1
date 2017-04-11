@@ -8,7 +8,9 @@ package p1.helpers;
 import entity.Project;
 import entity.Release;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
+import p1.enums.ImageEnum;
 import p1.enums.TableEnum;
 import p1.utils.DatabaseUtil;
 import p1.utils.FlowUtil;
@@ -48,13 +50,14 @@ public class FullListViewHelper {
             }
             case RELEASE_TABLE: {
                 List<Release> lista = OperationsUtil.getInstance().getAllReleases(FlowUtil.getInstance().getCurrentProject());
-                data = new Object[lista.size()][5];
+                data = new Object[lista.size()][6];
                 for (int i = 0; i < lista.size(); i++) {
                     data[i][0] = lista.get(i).getId();
                     data[i][1] = lista.get(i).getCode();
                     data[i][2] = lista.get(i).getDateAdded();
                     data[i][3] = lista.get(i).getClosed();
                     data[i][4] = lista.get(i).getDateClosed();
+                    data[i][5] = OperationsUtil.getInstance().getIcon(ImageEnum.CLOSE);
                 }
                 break;
             }
@@ -70,6 +73,16 @@ public class FullListViewHelper {
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;
+        }
+
+        @Override
+        public Class<?> getColumnClass(int column) {
+            if (tableEnum == TableEnum.RELEASE_TABLE) {
+                if (column == 5) {
+                    return ImageIcon.class;
+                }
+            }
+            return Object.class;
         }
     }
 

@@ -13,6 +13,6 @@
     <mapping class="entity.Kot"/>
     <mapping class="entity.Project"/>
     <mapping class="entity.Release"/>
-    <mapping class="entity.Version"/>
+    <mapping class="entity.Revision"/>
   </session-factory>
 </hibernate-configuration>

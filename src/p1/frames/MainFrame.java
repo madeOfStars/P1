@@ -79,7 +79,7 @@ public class MainFrame extends JFrame {
         newRls.setName(MenuEnum.NEW_RLS.name());
         rls.add(newRls);
         newRls.addActionListener(mListener);
-        JMenuItem editRls = new JMenuItem(MenuEnum.EDIT_PRJ.getLabel());
+        JMenuItem editRls = new JMenuItem(MenuEnum.EDIT_RLS.getLabel());
         editRls.setFont(FontEnum.CONTENT.getFont());
         rls.add(editRls);
         editRls.addActionListener(mListener);
@@ -120,7 +120,7 @@ public class MainFrame extends JFrame {
                 epd.setVisible(true);
             } else if (temp.getName().equals(MenuEnum.DEL_PRJ.name())) {
                 switch (FlowUtil.getInstance().getActiveView()) {
-                    case PROJECT_VIEW: {
+                    case HOME: {
                         List<Project> lista = DatabaseUtil.getInstance().getAllProjects();
                         DeleteDialog<Project> deleteDialog = new DeleteDialog<>(MainFrame.this, "Select Projects To be Deleted", lista);
                         deleteDialog.setVisible(true);

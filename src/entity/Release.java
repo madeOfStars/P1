@@ -37,7 +37,7 @@ public class Release implements java.io.Serializable, Identifiable {
     
     private Project project;
     
-    private List<Version> releaseVersion=new ArrayList<>();
+    private List<Revision> releaseVersion=new ArrayList<>();
 
     public Release() {
     }
@@ -124,11 +124,11 @@ public class Release implements java.io.Serializable, Identifiable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
     @Fetch(FetchMode.SELECT)
-    public List<Version> getReleaseVersion() {
+    public List<Revision> getReleaseVersion() {
         return releaseVersion;
     }
 
-    public void setReleaseVersion(List<Version> releaseVersion) {
+    public void setReleaseVersion(List<Revision> releaseVersion) {
         this.releaseVersion = releaseVersion;
     }
 

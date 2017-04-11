@@ -2,9 +2,8 @@ package p1.utils;
 
 import entity.Project;
 import entity.Release;
-import entity.Version;
+import entity.Revision;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
@@ -82,6 +81,24 @@ public class DatabaseUtil {
             sp.getSession().close();
         }
     }
+    
+    public boolean closeRelease(Release release){
+        release.setClosed(1);
+        release.setDateClosed(new Date());
+        
+        SessionPackage sp=new SessionPackage();
+        
+        try {
+            sp.getSession().update(release);
+            sp.getTx().commit();
+            return true;
+        } catch(Exception e){
+            e.printStackTrace();
+            return false;
+        } finally {
+            sp.getSession().close();
+        }
+    }
 
     public boolean updateProject(Project p) {
         SessionPackage sp = new SessionPackage();
@@ -108,14 +125,14 @@ public class DatabaseUtil {
         return nr > 0;
     }
     
-    public List<Version> getAllVersion(Release release){
+    public List<Revision> getAllVersion(Release release){
         SessionPackage sp = new SessionPackage();
-        String hql = "select v "
-                + "from Version v "
-                + "where v.release.id=:id";
+        String hql = "select r "
+                + "from Revision r "
+                + "where r.release.id=:id";
         Query q = sp.getSession().createQuery(hql);
         q.setParameter("id", release.getId());
-        List<Version> lista = q.list();
+        List<Revision> lista = q.list();
         sp.getSession().close();
         return lista;
     }
