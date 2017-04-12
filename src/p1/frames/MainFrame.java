@@ -14,6 +14,7 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import p1.dialogs.DeleteDialog;
 import p1.dialogs.EditProjectDialog;
+import p1.dialogs.EditReleaseDialog;
 import p1.enums.ActiveView;
 import p1.enums.FontEnum;
 import p1.enums.MenuEnum;
@@ -134,7 +135,8 @@ public class MainFrame extends JFrame {
             } else if (temp.getName().equals(MenuEnum.NEW_RLS.name())) {
                 FlowUtil.getInstance().addNewRelease();
             } else if (temp.getName().equals(MenuEnum.EDIT_RLS.name())) {
-                
+                EditReleaseDialog erd=new EditReleaseDialog(MainFrame.this, MenuEnum.EDIT_RLS.getLabel());
+                erd.setVisible(true);
             } else if (temp.getName().equals(MenuEnum.EXIT.name())) {
                 System.exit(0);
             }

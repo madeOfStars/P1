@@ -137,4 +137,9 @@ public class Release implements java.io.Serializable, Identifiable {
     public int getIdentifier() {
         return this.getId();
     }
+    
+    @Override
+    public String toString(){
+        return this.getCode()+"";
+    }
 }
