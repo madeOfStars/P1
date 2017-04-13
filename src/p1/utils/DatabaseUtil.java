@@ -140,4 +140,18 @@ public class DatabaseUtil {
     public <E> List<E> getAll(E component){
         return null;
     }
+    
+    public <E> boolean update(E element){
+        SessionPackage sp=new SessionPackage();
+        try{
+            sp.getSession().update(element);
+            sp.getTx().commit();
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        } finally {
+            sp.getSession().close();
+        }
+    }
 }

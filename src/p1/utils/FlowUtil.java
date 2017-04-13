@@ -65,7 +65,6 @@ public class FlowUtil {
     }
 
     public void defineProjectView(Project project) {
-        //this.currentProject = project;
         clean();
         OperationsUtil ou = OperationsUtil.getInstance();
         List<Release> lista = ou.getAllReleases(project);
@@ -83,9 +82,10 @@ public class FlowUtil {
     public void addNewRelease() {
         String code = JOptionPane.showInputDialog(getCp(), "Enter Release Code");
         if (code != null) {
+            Project project=(Project)getReturnable().getElement();
             int intCode = Integer.parseInt(code);
-            OperationsUtil.getInstance().popUpMessages(OperationsUtil.getInstance().addNewRelease((Project) this.getReturnable().getElement(), intCode), "Release Successfully Added", "Release Failed To Be Added", ActiveView.PROJECT_VIEW);
-            defineProjectView((Project) this.getReturnable().getElement());
+            OperationsUtil.getInstance().popUpMessages(OperationsUtil.getInstance().addNewRelease(project, intCode), "Release Successfully Added", "Release Failed To Be Added", ActiveView.PROJECT_VIEW);
+            defineProjectView(project);
         }
     }
 

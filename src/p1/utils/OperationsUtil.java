@@ -88,6 +88,7 @@ public class OperationsUtil {
                     FlowUtil.getInstance().defineFirstView();
                     break;
                 case RELEASE_VIEW:
+                    flowUtil.defineProjectView((Project)FlowUtil.getReturnable().getElement());
                     break;
             }
         } else {
@@ -127,11 +128,13 @@ public class OperationsUtil {
 
     public void updateProject(Project p) {
         popUpMessages(databaseUtil.updateProject(p), "Project Updated Successfully", "Project Failed To Update", ActiveView.PROJECT_VIEW);
-        flowUtil.defineFirstView();
     }
 
     public void deleteProjects(List<Integer> lista) {
         popUpMessages(databaseUtil.deleteProjects(lista), "Project(s) deleted Successfully", "Failed to delete Project(s)", ActiveView.PROJECT_VIEW);
-        flowUtil.defineFirstView();
+    }
+
+    public void updateRelease(Release release) {
+        popUpMessages(databaseUtil.update(release), "Release Updated Successfully", "Release Failed To Update", ActiveView.RELEASE_VIEW);
     }
 }
