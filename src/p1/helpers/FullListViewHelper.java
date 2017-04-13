@@ -49,7 +49,7 @@ public class FullListViewHelper {
                 break;
             }
             case RELEASE_TABLE: {
-                List<Release> lista = OperationsUtil.getInstance().getAllReleases(FlowUtil.getInstance().getCurrentProject());
+                List<Release> lista = OperationsUtil.getInstance().getAllReleases((Project)FlowUtil.getInstance().getReturnable().getElement());
                 data = new Object[lista.size()][6];
                 for (int i = 0; i < lista.size(); i++) {
                     data[i][0] = lista.get(i).getId();

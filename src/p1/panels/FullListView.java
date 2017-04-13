@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package p1.panels;
 
 import javax.swing.BorderFactory;
@@ -20,28 +15,29 @@ import p1.listeners.MListener;
  * @author Ertjon
  * @param <E>
  */
-public class FullListView<E> extends FullListViewHelper implements Returnable{
-    private JTable jTable=null;
-    private final JPanel mainPanel=new JPanel();
-    
+public class FullListView<E> extends FullListViewHelper implements Returnable {
+
+    private JTable jTable = null;
+    private final JPanel mainPanel = new JPanel();
+
     private E element;
-    
-    public FullListView(){
+
+    public FullListView() {
     }
-    
-    public FullListView(TableEnum tableEnum){
+
+    public FullListView(TableEnum tableEnum) {
         this(tableEnum, null);
     }
-    
-    public FullListView(TableEnum tableEnum, E element){
+
+    public FullListView(TableEnum tableEnum, E element) {
         this(tableEnum.getColumns(), tableEnum, element);
     }
-    
-    public FullListView(String []columns, TableEnum tableEnum, E element) {
-        super(columns,tableEnum);
-        this.element=element;
-        switch (tableEnum){
-            case PROJECT_TABLE:{
+
+    public FullListView(String[] columns, TableEnum tableEnum, E element) {
+        super(columns, tableEnum);
+        this.element = element;
+        switch (tableEnum) {
+            case PROJECT_TABLE: {
                 setProjectTable();
                 break;
             }
@@ -55,8 +51,8 @@ public class FullListView<E> extends FullListViewHelper implements Returnable{
             }
         }
     }
-    
-    private void setProjectTable(){
+
+    private void setProjectTable() {
         JPanel tablePanel = new JPanel();
         fillJTable();
         jTable = new JTable();
@@ -74,8 +70,8 @@ public class FullListView<E> extends FullListViewHelper implements Returnable{
         tablePanel.add(jsp);
         mainPanel.add(tablePanel);
     }
-    
-    private void setReleaseTable(){
+
+    private void setReleaseTable() {
         JPanel tablePanel = new JPanel();
         fillJTable();
         jTable = new JTable();
@@ -94,8 +90,8 @@ public class FullListView<E> extends FullListViewHelper implements Returnable{
         tablePanel.add(jsp);
         mainPanel.add(tablePanel);
     }
-    
-    private void setVersionTable(){
+
+    private void setVersionTable() {
         JPanel tablePanel = new JPanel();
         fillJTable();
         jTable = new JTable();
@@ -116,5 +112,10 @@ public class FullListView<E> extends FullListViewHelper implements Returnable{
     @Override
     public JPanel getPanel() {
         return mainPanel;
+    }
+
+    @Override
+    public E getElement() {
+        return element;
     }
 }

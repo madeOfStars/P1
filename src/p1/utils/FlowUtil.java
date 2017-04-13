@@ -12,6 +12,7 @@ import p1.enums.ActiveView;
 import p1.enums.ContainerPositionEnum;
 import p1.enums.LabelEnum;
 import p1.enums.TableEnum;
+import p1.interfaces.Returnable;
 import p1.panels.FullListView;
 import p1.panels.HeaderTemplate;
 import p1.panels.NoItemPanel;
@@ -28,8 +29,10 @@ public class FlowUtil {
     private Container cp;
     private final DatabaseUtil databaseUtil = DatabaseUtil.getInstance();
 
-    private Project currentProject;
+    //private Project currentProject;
     private ActiveView activeView;
+    
+    private Returnable r;
 
     public Container getCp() {
         return cp;
@@ -54,7 +57,7 @@ public class FlowUtil {
         clean();
         if (databaseUtil.getAllProjects() != null && databaseUtil.getAllProjects().size() > 0) {
             setView(new HeaderTemplate("All Projects"));
-            setView(new FullListView(TableEnum.PROJECT_TABLE).getPanel());
+            setView((r=new FullListView(TableEnum.PROJECT_TABLE)).getPanel());
             getCp().setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
         } else {
             setView(new NoProjectsPanel(), ContainerPositionEnum.NORTH.getLocation());
@@ -63,13 +66,13 @@ public class FlowUtil {
     }
 
     public void defineProjectView(Project project) {
-        this.currentProject = project;
+        //this.currentProject = project;
         clean();
         OperationsUtil ou = OperationsUtil.getInstance();
         List<Release> lista = ou.getAllReleases(project);
         if (lista != null && lista.size() > 0) {
             setView(new HeaderTemplate("All Releases", true, project));
-            setView(new FullListView(TableEnum.RELEASE_TABLE, project).getPanel());
+            setView((r=new FullListView(TableEnum.RELEASE_TABLE, project)).getPanel());
             getCp().setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
         } else {
             setView(new HeaderTemplate(project.getProjectName(), true, project));
@@ -82,8 +85,8 @@ public class FlowUtil {
         String code = JOptionPane.showInputDialog(getCp(), "Enter Release Code");
         if (code != null) {
             int intCode = Integer.parseInt(code);
-            OperationsUtil.getInstance().popUpMessages(OperationsUtil.getInstance().addNewRelease(currentProject, intCode), "Release Successfully Added", "Release Failed To Be Added", ActiveView.PROJECT_VIEW);
-            defineProjectView(currentProject);
+            OperationsUtil.getInstance().popUpMessages(OperationsUtil.getInstance().addNewRelease((Project)this.getReturnable().getElement(), intCode), "Release Successfully Added", "Release Failed To Be Added", ActiveView.PROJECT_VIEW);
+            defineProjectView((Project)this.getReturnable().getElement());
         }
     }
 
@@ -93,7 +96,7 @@ public class FlowUtil {
         List<Revision> lista = oUtil.getAllVersions(release);
         if (lista != null && lista.size() > 0) {
             setView(new HeaderTemplate("All Versions", true, release));
-            setView(new FullListView(TableEnum.VERSION_TABLE, release).getPanel());
+            setView((r=new FullListView(TableEnum.VERSION_TABLE, release)).getPanel());
             getCp().setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
         } else {
             setView(new HeaderTemplate(release.getCode() + "", true, release));
@@ -125,13 +128,13 @@ public class FlowUtil {
         getCp().revalidate();
     }
 
-    public Project getCurrentProject() {
+    /*public Project getCurrentProject() {
         return currentProject;
     }
 
     public void setCurrentProject(Project currentProject) {
         this.currentProject = currentProject;
-    }
+    }*/
 
     public ActiveView getActiveView() {
         return activeView;
@@ -141,4 +144,7 @@ public class FlowUtil {
         this.activeView = activeView;
     }
 
+    public Returnable getReturnable(){
+        return this.r;
+    }
 }

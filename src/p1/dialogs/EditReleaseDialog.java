@@ -42,7 +42,7 @@ public class EditReleaseDialog extends DialogHelper {
     }
 
     private void getReleaseList() {
-        completeList = DatabaseUtil.getInstance().getAllReleases(FlowUtil.getInstance().getCurrentProject());
+        completeList = DatabaseUtil.getInstance().getAllReleases((Project)FlowUtil.getInstance().getReturnable().getElement());
         for (Release p : completeList) {
             cb.addItem(p);
         }

@@ -32,8 +32,8 @@ public class OperationsUtil {
         }
         return operationsUtil;
     }
-    
-    public File chooseFile(){
+
+    public File chooseFile() {
         JFileChooser chooser = new JFileChooser("D:/U/ujava/TestDirForP1");
         chooser.setDialogTitle("Choose Project");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -49,8 +49,8 @@ public class OperationsUtil {
     }
 
     public Boolean addNewProject() {
-        File f=chooseFile();
-        if (f!=null){
+        File f = chooseFile();
+        if (f != null) {
             return databaseUtil.addNewProject(f);
         } else {
             return null;
@@ -64,26 +64,26 @@ public class OperationsUtil {
 
             case FAIL:
                 return new ImageIcon(ImageEnum.FAIL.getPath(), ImageEnum.FAIL.getAlt());
-                
+
             case HOME:
                 return new ImageIcon(ImageEnum.HOME.getPath(), ImageEnum.HOME.getAlt());
-                
+
             case BACK:
-                return new ImageIcon(ImageEnum.BACK.getPath(),ImageEnum.BACK.getAlt());
-              
+                return new ImageIcon(ImageEnum.BACK.getPath(), ImageEnum.BACK.getAlt());
+
             case CLOSE:
-                return new ImageIcon(ImageEnum.CLOSE.getPath(),ImageEnum.CLOSE.getAlt());
+                return new ImageIcon(ImageEnum.CLOSE.getPath(), ImageEnum.CLOSE.getAlt());
         }
         return null;
     }
 
-    public void popUpMessages(Boolean success, String messageOK,String messageFAIL, ActiveView activeView) {
+    public void popUpMessages(Boolean success, String messageOK, String messageFAIL, ActiveView activeView) {
         if (success == null) {
             return;
         }
         if (success) {
             JOptionPane.showMessageDialog(flowUtil.getCp(), messageOK, "Success", JOptionPane.DEFAULT_OPTION, this.getIcon(ImageEnum.OK));
-            switch (activeView){
+            switch (activeView) {
                 case PROJECT_VIEW:
                     FlowUtil.getInstance().defineFirstView();
                     break;
@@ -102,35 +102,35 @@ public class OperationsUtil {
     public boolean addNewRelease(Project project, int releaseCode) {
         return databaseUtil.addNewRelease(project, releaseCode) && addReleaseFolder(project, releaseCode);
     }
-    
-    private boolean addReleaseFolder(Project p, int releaseCode){
-        File f=new File("C:\\releases\\"+p.getProjectName()+"-"+releaseCode+"");
-        if (!f.exists()){
+
+    private boolean addReleaseFolder(Project p, int releaseCode) {
+        File f = new File("C:\\releases\\" + p.getProjectName() + "-" + releaseCode + "");
+        if (!f.exists()) {
             return f.mkdir();
         } else {
             return true;
         }
     }
-    
-    public boolean closeRelease(Release release){
+
+    public boolean closeRelease(Release release) {
         return databaseUtil.closeRelease(release);
     }
-    
-    public List<Revision> getAllVersions(Release release){
+
+    public List<Revision> getAllVersions(Release release) {
         return databaseUtil.getAllVersion(release);
     }
-    
-    public void exitDialog(JDialog dialog){
+
+    public void exitDialog(JDialog dialog) {
         dialog.setVisible(false);
         dialog.dispose();
     }
-    
-    public void updateProject(Project p){
+
+    public void updateProject(Project p) {
         popUpMessages(databaseUtil.updateProject(p), "Project Updated Successfully", "Project Failed To Update", ActiveView.PROJECT_VIEW);
         flowUtil.defineFirstView();
     }
-    
-    public void deleteProjects(List<Integer> lista){
+
+    public void deleteProjects(List<Integer> lista) {
         popUpMessages(databaseUtil.deleteProjects(lista), "Project(s) deleted Successfully", "Failed to delete Project(s)", ActiveView.PROJECT_VIEW);
         flowUtil.defineFirstView();
     }

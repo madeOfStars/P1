@@ -5,7 +5,9 @@ import javax.swing.JPanel;
 /**
  *
  * @author Ertjon Mecka
+ * @param <E>
  */
-public interface Returnable {
+public interface Returnable<E> {
     public JPanel getPanel();
+    public E getElement();
 }

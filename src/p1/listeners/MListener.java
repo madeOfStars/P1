@@ -3,7 +3,6 @@ package p1.listeners;
 import entity.Project;
 import entity.Release;
 import java.awt.Point;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
 import javax.swing.JLabel;
