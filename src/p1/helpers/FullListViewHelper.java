@@ -19,20 +19,26 @@ import p1.utils.OperationsUtil;
 /**
  *
  * @author Ertjon Mecka
+ * @param <E>
  */
-public class FullListViewHelper {
+public class FullListViewHelper<E> {
 
     private Object[][] data;
     private final DatabaseUtil dbUtil = DatabaseUtil.getInstance();
     private String[] columns;
     private TableEnum tableEnum;
 
+    private E element;
+
+    ;
+
     public FullListViewHelper() {
     }
 
-    public FullListViewHelper(String[] columns, TableEnum tableEnum) {
+    public FullListViewHelper(String[] columns, TableEnum tableEnum, E element) {
         this.columns = columns;
         this.tableEnum = tableEnum;
+        this.element = element;
     }
 
     protected void fillJTable() {
@@ -49,7 +55,7 @@ public class FullListViewHelper {
                 break;
             }
             case RELEASE_TABLE: {
-                List<Release> lista = OperationsUtil.getInstance().getAllReleases((Project)FlowUtil.getInstance().getReturnable().getElement());
+                List<Release> lista = OperationsUtil.getInstance().getAllReleases((Project) element);
                 data = new Object[lista.size()][6];
                 for (int i = 0; i < lista.size(); i++) {
                     data[i][0] = lista.get(i).getId();
@@ -108,6 +114,14 @@ public class FullListViewHelper {
 
     protected void setTableEnum(TableEnum tableEnum) {
         this.tableEnum = tableEnum;
+    }
+
+    public E getElement() {
+        return element;
+    }
+
+    public void setElement(E element) {
+        this.element = element;
     }
 
 }

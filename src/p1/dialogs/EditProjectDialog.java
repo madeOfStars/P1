@@ -120,12 +120,12 @@ public class EditProjectDialog extends DialogHelper {
             if (src instanceof JComboBox) {
                 JComboBox<Project> combo = (JComboBox<Project>) src;
                 Project selectedProject = (Project) combo.getSelectedItem();
-                //FlowUtil.getInstance().setCurrentProject(selectedProject);
+                FlowUtil.getReturnable().setElement(selectedProject);
                 prjNameTF.setText(selectedProject.getProjectName());
                 prjPathTf.setText(selectedProject.getPath());
             } else {
                 if (src == okBtn) {
-                    Project p = (Project)FlowUtil.getInstance().getReturnable().getElement();
+                    Project p = (Project)FlowUtil.getReturnable().getElement();
                     p.setProjectName(prjNameTF.getText());
                     p.setPath(prjPathTf.getText());
                     exit();

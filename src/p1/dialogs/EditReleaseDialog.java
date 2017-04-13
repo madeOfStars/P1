@@ -10,12 +10,12 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import p1.dialogs.helpers.DialogHelper;
 import p1.enums.ContainerPositionEnum;
 import p1.enums.FontEnum;
 import p1.utils.DatabaseUtil;
 import p1.utils.FlowUtil;
-import p1.utils.OperationsUtil;
 
 /**
  *
@@ -25,10 +25,12 @@ public class EditReleaseDialog extends DialogHelper {
 
     private final JComboBox<Release> cb;
     private List<Release> completeList;
+    
+    private JTextField codeTF=new JTextField();
 
     public EditReleaseDialog(JFrame frame, String title) {
         super(frame, title);
-        setSize(400, 200);
+        setSize(400, 150);
         JPanel header = new JPanel(new GridLayout(1, 2));
         JLabel lbl = new JLabel("Select Release");
         lbl.setFont(FontEnum.CONTENT.getFont());
@@ -38,11 +40,17 @@ public class EditReleaseDialog extends DialogHelper {
         cb.addActionListener(new LocalProjectLister());
         getReleaseList();
         header.add(cb);
+        JPanel changeable=new JPanel(new GridLayout(1, 2));
+        JLabel codeLabel=new JLabel("Release Code");
+        codeTF.setFont(FontEnum.CONTENT.getFont());
+        changeable.add(codeLabel);
+        changeable.add(codeTF);
         getContentPane().add(header, ContainerPositionEnum.NORTH.getLocation());
+        getContentPane().add(changeable, ContainerPositionEnum.CENTER.getLocation());
     }
 
     private void getReleaseList() {
-        completeList = DatabaseUtil.getInstance().getAllReleases((Project)FlowUtil.getInstance().getReturnable().getElement());
+        completeList = DatabaseUtil.getInstance().getAllReleases((Project)FlowUtil.getReturnable().getElement());
         for (Release p : completeList) {
             cb.addItem(p);
         }

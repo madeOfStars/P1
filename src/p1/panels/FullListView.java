@@ -34,7 +34,7 @@ public class FullListView<E> extends FullListViewHelper implements Returnable {
     }
 
     public FullListView(String[] columns, TableEnum tableEnum, E element) {
-        super(columns, tableEnum);
+        super(columns, tableEnum, element);
         this.element = element;
         switch (tableEnum) {
             case PROJECT_TABLE: {
@@ -117,5 +117,10 @@ public class FullListView<E> extends FullListViewHelper implements Returnable {
     @Override
     public E getElement() {
         return element;
+    }
+
+    @Override
+    public void setElement(Object element) {
+        this.element=(E)element;
     }
 }

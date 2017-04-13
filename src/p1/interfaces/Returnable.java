@@ -9,5 +9,6 @@ import javax.swing.JPanel;
  */
 public interface Returnable<E> {
     public JPanel getPanel();
+    public void setElement(E element);
     public E getElement();
 }
