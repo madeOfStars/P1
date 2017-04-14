@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -31,8 +30,8 @@ import p1.utils.OperationsUtil;
 public class DeleteDialog<E extends Identifiable> extends DeleteDialogHelper<E> {
 
     private final List<EnhancedJCheckBox> checkBocList;
-    private JButton okBtn;
-    private JButton cancelBtn;
+    private final JButton okBtn;
+    private final JButton cancelBtn;
 
     public DeleteDialog(JFrame frame, String title, List<E> data) {
         super(frame, title, data);

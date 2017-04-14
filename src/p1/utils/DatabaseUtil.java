@@ -125,6 +125,10 @@ public class DatabaseUtil {
         return nr > 0;
     }
     
+    public boolean delete(List<Integer> lista){
+        return false;
+    }
+    
     public List<Revision> getAllVersion(Release release){
         SessionPackage sp = new SessionPackage();
         String hql = "select r "

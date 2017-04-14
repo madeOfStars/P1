@@ -1,6 +1,7 @@
 package p1.frames;
 
 import entity.Project;
+import entity.Release;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -86,6 +87,7 @@ public class MainFrame extends JFrame {
         rls.add(editRls);
         editRls.addActionListener(mListener);
         JMenuItem delRls = new JMenuItem(MenuEnum.DEL_RLS.getLabel());
+        delRls.setName(MenuEnum.DEL_RLS.name());
         delRls.setFont(FontEnum.CONTENT.getFont());
         rls.add(delRls);
         delRls.addActionListener(mListener);
@@ -121,22 +123,18 @@ public class MainFrame extends JFrame {
                 EditProjectDialog epd = new EditProjectDialog(MainFrame.this, MenuEnum.EDIT_PRJ.getLabel());
                 epd.setVisible(true);
             } else if (temp.getName().equals(MenuEnum.DEL_PRJ.name())) {
-                switch (FlowUtil.getInstance().getActiveView()) {
-                    case HOME: {
-                        List<Project> lista = DatabaseUtil.getInstance().getAllProjects();
-                        DeleteDialog<Project> deleteDialog = new DeleteDialog<>(MainFrame.this, "Select Projects To be Deleted", lista);
-                        deleteDialog.setVisible(true);
-                        break;
-                    }
-                    case RELEASE_VIEW: {
-                        break;
-                    }
-                }
+                List<Project> lista = DatabaseUtil.getInstance().getAllProjects();
+                DeleteDialog<Project> deleteDialog = new DeleteDialog<>(MainFrame.this, "Select Projects To be Deleted", lista);
+                deleteDialog.setVisible(true);
             } else if (temp.getName().equals(MenuEnum.NEW_RLS.name())) {
                 FlowUtil.getInstance().addNewRelease();
             } else if (temp.getName().equals(MenuEnum.EDIT_RLS.name())) {
-                EditReleaseDialog erd=new EditReleaseDialog(MainFrame.this, MenuEnum.EDIT_RLS.getLabel());
+                EditReleaseDialog erd = new EditReleaseDialog(MainFrame.this, MenuEnum.EDIT_RLS.getLabel());
                 erd.setVisible(true);
+            } else if (temp.getName().equals(MenuEnum.DEL_RLS.name())) {
+                List<Release> lista=op.getAllReleases((Project)FlowUtil.getReturnable().getElement());
+                DeleteDialog<Release> deleteDialog=new DeleteDialog<>(MainFrame.this,"Select Release to be deleted",lista);
+                deleteDialog.setVisible(true);
             } else if (temp.getName().equals(MenuEnum.EXIT.name())) {
                 System.exit(0);
             }
