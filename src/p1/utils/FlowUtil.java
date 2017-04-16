@@ -74,7 +74,7 @@ public class FlowUtil {
             getCp().setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
         } else {
             setView(new HeaderTemplate(project.getProjectName(), true, project));
-            setView(new NoItemPanel(LabelEnum.NEW_RELEASE_LBL.name(), LabelEnum.NEW_RELEASE_LBL.getMessage()));
+            setView((FlowUtil.r=new NoItemPanel(LabelEnum.NEW_RELEASE_LBL.name(), LabelEnum.NEW_RELEASE_LBL.getMessage(),project)).getPanel());
         }
         this.activeView = ActiveView.PROJECT_VIEW;
     }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package p1.dialogs;
 
 import java.awt.GridLayout;
@@ -32,9 +27,12 @@ public class DeleteDialog<E extends Identifiable> extends DeleteDialogHelper<E> 
     private final List<EnhancedJCheckBox> checkBocList;
     private final JButton okBtn;
     private final JButton cancelBtn;
+    
+    private final Class<E> cls;
 
-    public DeleteDialog(JFrame frame, String title, List<E> data) {
+    public DeleteDialog(JFrame frame, String title, List<E> data, Class<E> cls) {
         super(frame, title, data);
+        this.cls=cls;
         setSize(350, 500);
         BListener bl=new BListener();
 
@@ -86,6 +84,6 @@ public class DeleteDialog<E extends Identifiable> extends DeleteDialogHelper<E> 
                 ids.add(el.getId());
         }
         
-        OperationsUtil.getInstance().deleteProjects(ids);
+        OperationsUtil.getInstance().delete(cls.getSimpleName(),ids);
     }
 }

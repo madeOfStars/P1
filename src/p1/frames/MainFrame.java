@@ -118,13 +118,13 @@ public class MainFrame extends JFrame {
             JMenuItem temp = (JMenuItem) src;
             if (temp.getName().equals(MenuEnum.NEW_PRJ.name())) {
                 Boolean newPrj = op.addNewProject();
-                op.popUpMessages(newPrj, "Project Successfully Added", "Project Failed To Be Added", ActiveView.PROJECT_VIEW);
+                op.popUpMessages(newPrj, "Project Successfully Added", "Project Failed To Be Added", ActiveView.HOME);
             } else if (temp.getName().equals(MenuEnum.EDIT_PRJ.name())) {
                 EditProjectDialog epd = new EditProjectDialog(MainFrame.this, MenuEnum.EDIT_PRJ.getLabel());
                 epd.setVisible(true);
             } else if (temp.getName().equals(MenuEnum.DEL_PRJ.name())) {
                 List<Project> lista = DatabaseUtil.getInstance().getAllProjects();
-                DeleteDialog<Project> deleteDialog = new DeleteDialog<>(MainFrame.this, "Select Projects To be Deleted", lista);
+                DeleteDialog<Project> deleteDialog = new DeleteDialog<>(MainFrame.this, "Select Projects To be Deleted", lista,Project.class);
                 deleteDialog.setVisible(true);
             } else if (temp.getName().equals(MenuEnum.NEW_RLS.name())) {
                 FlowUtil.getInstance().addNewRelease();
@@ -133,7 +133,7 @@ public class MainFrame extends JFrame {
                 erd.setVisible(true);
             } else if (temp.getName().equals(MenuEnum.DEL_RLS.name())) {
                 List<Release> lista=op.getAllReleases((Project)FlowUtil.getReturnable().getElement());
-                DeleteDialog<Release> deleteDialog=new DeleteDialog<>(MainFrame.this,"Select Release to be deleted",lista);
+                DeleteDialog<Release> deleteDialog=new DeleteDialog<>(MainFrame.this,"Select Release to be deleted",lista, Release.class);
                 deleteDialog.setVisible(true);
             } else if (temp.getName().equals(MenuEnum.EXIT.name())) {
                 System.exit(0);

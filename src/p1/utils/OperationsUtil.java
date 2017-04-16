@@ -76,6 +76,10 @@ public class OperationsUtil {
         }
         return null;
     }
+    
+    public void popUpMessages(Boolean success, String messageOK, String messageFAIL) {
+        popUpMessages(success, messageOK, messageFAIL, flowUtil.getActiveView());
+    }
 
     public void popUpMessages(Boolean success, String messageOK, String messageFAIL, ActiveView activeView) {
         if (success == null) {
@@ -84,10 +88,10 @@ public class OperationsUtil {
         if (success) {
             JOptionPane.showMessageDialog(flowUtil.getCp(), messageOK, "Success", JOptionPane.DEFAULT_OPTION, this.getIcon(ImageEnum.OK));
             switch (activeView) {
-                case PROJECT_VIEW:
+                case HOME:
                     FlowUtil.getInstance().defineFirstView();
                     break;
-                case RELEASE_VIEW:
+                case PROJECT_VIEW:
                     flowUtil.defineProjectView((Project)FlowUtil.getReturnable().getElement());
                     break;
             }
@@ -127,14 +131,18 @@ public class OperationsUtil {
     }
 
     public void updateProject(Project p) {
-        popUpMessages(databaseUtil.updateProject(p), "Project Updated Successfully", "Project Failed To Update", ActiveView.PROJECT_VIEW);
+        popUpMessages(databaseUtil.updateProject(p), "Project Updated Successfully", "Project Failed To Update", ActiveView.HOME);
     }
 
     public void deleteProjects(List<Integer> lista) {
         popUpMessages(databaseUtil.deleteProjects(lista), "Project(s) deleted Successfully", "Failed to delete Project(s)", ActiveView.PROJECT_VIEW);
     }
+    
+    public void delete(String elementName, List<Integer> lista) {
+        popUpMessages(databaseUtil.delete(elementName, lista), elementName+"(s) deleted Successfully", "Failed to delete "+elementName+"(s)");
+    }
 
     public void updateRelease(Release release) {
-        popUpMessages(databaseUtil.update(release), "Release Updated Successfully", "Release Failed To Update", ActiveView.RELEASE_VIEW);
+        popUpMessages(databaseUtil.update(release), "Release Updated Successfully", "Release Failed To Update");
     }
 }

@@ -15,7 +15,7 @@ import p1.listeners.MListener;
  * @author Ertjon
  * @param <E>
  */
-public class FullListView<E> extends FullListViewHelper implements Returnable {
+public class FullListView<E> extends FullListViewHelper implements Returnable<E> {
 
     private JTable jTable = null;
     private final JPanel mainPanel = new JPanel();

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package p1.helpers;
 
 import entity.Project;
@@ -13,7 +8,6 @@ import javax.swing.table.DefaultTableModel;
 import p1.enums.ImageEnum;
 import p1.enums.TableEnum;
 import p1.utils.DatabaseUtil;
-import p1.utils.FlowUtil;
 import p1.utils.OperationsUtil;
 
 /**

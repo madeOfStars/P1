@@ -125,8 +125,16 @@ public class DatabaseUtil {
         return nr > 0;
     }
     
-    public boolean delete(List<Integer> lista){
-        return false;
+    public boolean delete(String elementName, List<Integer> lista){
+        SessionPackage sp = new SessionPackage();
+        String qry = "delete 1 where id in (:ids)";
+        qry=qry.replace("1", elementName);
+        Query q = sp.getSession().createQuery(qry);
+        q.setParameterList("ids", lista);
+        int nr = q.executeUpdate();
+        sp.getTx().commit();
+        sp.getSession().close();
+        return nr > 0;
     }
     
     public List<Revision> getAllVersion(Release release){
