@@ -1,0 +1,75 @@
+------------------------------------------------------------------------
+r25901 | m.castronuovo | 2016-02-16 11:29:37 +0100 (Tue, 16 Feb 2016) | 1 line
+Changed paths:
+   M /trunk/arm_am/flex_src/com/armundia/enums/at/CategoriaStrumento.as
+   M /trunk/arm_am/flex_src/com/armundia/enums/at/CategoriaStrumentoExt.as
+
+Aggiunta categoria strumento GPM
+------------------------------------------------------------------------
+r25842 | m.castronuovo | 2016-02-11 13:35:46 +0100 (Thu, 11 Feb 2016) | 1 line
+Changed paths:
+   M /trunk/arm_am/flex_src/com/armundia/arm_am/entity/lightobj/PortafoglioLightBase.as
+
+Inserimento ordini con appropriato deposito titoli
+------------------------------------------------------------------------
+r25841 | m.castronuovo | 2016-02-11 13:34:04 +0100 (Thu, 11 Feb 2016) | 1 line
+Changed paths:
+   M /trunk/arm_am/flex_src/com/armundia/arm_ws/desktop/events/CompraVendiEvent.as
+   M /trunk/arm_am/flex_src/com/armundia/arm_ws/desktop/propinv/AllineamentiDG.mxml
+   M /trunk/arm_am/flex_src/com/armundia/arm_ws/desktop/propinv/CompraVendiStrumento.mxml
+   M /trunk/arm_am/flex_src/com/armundia/arm_ws/desktop/propinv/PropInvOrdiniDettaglioManuali.mxml
+   M /trunk/arm_am/flex_src/com/armundia/arm_ws/desktop/propinv/PropPortAttivoDG.mxml
+
+Inserimento ordini con appropriato deposito titoli
+------------------------------------------------------------------------
+r25557 | g.sechi | 2016-01-05 10:30:02 +0100 (Tue, 05 Jan 2016) | 1 line
+Changed paths:
+   A /trunk/arm_am/resources/sql_view/convergenza_view_004.sql
+
+Modifiche view tkt 271 275 278
+------------------------------------------------------------------------
+r25555 | g.sechi | 2016-01-05 10:26:19 +0100 (Tue, 05 Jan 2016) | 1 line
+Changed paths:
+   A /trunk/arm_am/flex/images/switch-off.png
+   A /trunk/arm_am/flex/images/switch-on.png
+   M /trunk/arm_am/flex_src/com/armundia/Resource.as
+   M /trunk/arm_am/flex_src/com/armundia/arm_ws/desktop/client/DGRapportiBanca.mxml
+   A /trunk/arm_am/flex_src/com/armundia/arm_ws/desktop/editorptf/AttivazioneRenderer.mxml
+   M /trunk/arm_am/flex_src/com/armundia/arm_ws/pojo/RapportoBancaBase.as
+
+Modifiche view tkt 271 275 278
+------------------------------------------------------------------------
+r25530 | g.pirollo | 2015-12-31 09:38:24 +0100 (Thu, 31 Dec 2015) | 2 lines
+Changed paths:
+   M /trunk/arm_am/flex_src/com/armundia/arm_ws/portanalysis/ViewVar.mxml
+
+WS - correzione etichette grafici a torta del var
+
+------------------------------------------------------------------------
+r25521 | e.mecka | 2015-12-24 16:25:04 +0100 (Thu, 24 Dec 2015) | 1 line
+Changed paths:
+   M /trunk/arm_am/flex_src/com/armundia/enums/po/TipoPorf.as
+   M /trunk/arm_am-ejb/ejbModule/com/armundia/enums/po/TipoPorf.java
+
+aggiunto tipoPorf 'E'
+------------------------------------------------------------------------
+r25517 | e.mecka | 2015-12-24 16:10:58 +0100 (Thu, 24 Dec 2015) | 1 line
+Changed paths:
+   M /trunk/arm_am/flex_src/com/armundia/arm_ws/anagfil/CompletaRappConsCtl.as
+   M /trunk/arm_am/flex_src/com/armundia/arm_ws/anagfil/CompletaRappContratto.mxml
+
+aggiunti due radio button per il tipo di contratto
+------------------------------------------------------------------------
+r25401 | g.pirollo | 2015-12-14 15:23:11 +0100 (Mon, 14 Dec 2015) | 1 line
+Changed paths:
+   M /trunk/arm_am/flex_src/com/armundia/arm_am/entity/lightobj/PortafoglioLightBase.as
+
+WS - convergenza - allineamento portafoglio java-flex
+------------------------------------------------------------------------
+r25380 | g.pirollo | 2015-12-10 13:00:34 +0100 (Thu, 10 Dec 2015) | 1 line
+Changed paths:
+   M /trunk/arm_am/resources/sql_view/convergenza_view_002.sql
+   M /trunk/arm_am/resources/sql_view/convergenza_view_003.sql
+
+WS - convergenza - flusso P01 aggiunta campo activityStatus
+------------------------------------------------------------------------

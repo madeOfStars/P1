@@ -99,7 +99,7 @@ public class FlowUtil {
             getCp().setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
         } else {
             setView(new HeaderTemplate(release.getCode() + "", true, release));
-            setView(new NoItemPanel(LabelEnum.NEW_REVISION_LBL.name(), LabelEnum.NEW_REVISION_LBL.getMessage()));
+            setView(new NoItemPanel(LabelEnum.NEW_REVISION_LBL.name(), LabelEnum.NEW_REVISION_LBL.getMessage()).getPanel());
         }
         this.activeView = ActiveView.RELEASE_VIEW;
     }
