@@ -13,7 +13,7 @@ public class P1 {
      */
     public static void main(String[] args) {
         MainFrame mf=new MainFrame();
-        mf.setTitle("P1");
+        mf.setTitle("P1(Elsa)");
         mf.show();
     }
     

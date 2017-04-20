@@ -105,15 +105,26 @@ public class OperationsUtil {
     }
 
     public boolean addNewRelease(Project project, int releaseCode) {
-        return databaseUtil.addNewRelease(project, releaseCode) && addReleaseFolder(project, releaseCode);
+        Release rls=databaseUtil.addNewRelease(project, releaseCode);
+        if (rls!=null){
+            File f=addReleaseFolder(project, releaseCode);
+            if (f!=null){
+                rls.setReleaseFolder(f);
+                return true;
+            }
+        }
+        return false;
     }
 
-    private boolean addReleaseFolder(Project p, int releaseCode) {
+    private File addReleaseFolder(Project p, int releaseCode) {
         File f = new File("C:\\releases\\" + p.getProjectName() + "-" + releaseCode + "");
         if (!f.exists()) {
-            return f.mkdir();
+            if (f.mkdir())
+                return f;
+            else
+                return null;
         } else {
-            return true;
+            return f;
         }
     }
 

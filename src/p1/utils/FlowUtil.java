@@ -99,7 +99,7 @@ public class FlowUtil {
             getCp().setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
         } else {
             setView(new HeaderTemplate(release.getCode() + "", true, release));
-            setView(new NoItemPanel(LabelEnum.NEW_REVISION_LBL.name(), LabelEnum.NEW_REVISION_LBL.getMessage()).getPanel());
+            setView((FlowUtil.r=new NoItemPanel(LabelEnum.NEW_REVISION_LBL.name(), LabelEnum.NEW_REVISION_LBL.getMessage(),release)).getPanel());
         }
         this.activeView = ActiveView.RELEASE_VIEW;
     }
@@ -111,6 +111,14 @@ public class FlowUtil {
         if (response == JOptionPane.YES_OPTION) {
             OperationsUtil.getInstance().popUpMessages(OperationsUtil.getInstance().closeRelease(release), "Release Closed Successfully", "Failed to closse Release", ActiveView.RELEASE_VIEW);
             defineProjectView(release.getProject());
+        }
+    }
+    
+    public void addNewRevision(){
+        String code = JOptionPane.showInputDialog(getCp(), "Enter Revision Code");
+        if (code!=null){
+            Release release=(Release)getReturnable().getElement();
+            int intCode=Integer.parseInt(code);
         }
     }
 

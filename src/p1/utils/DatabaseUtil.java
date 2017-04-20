@@ -66,17 +66,17 @@ public class DatabaseUtil {
         return lista;
     }
 
-    public boolean addNewRelease(Project project, int codeRelease) {
+    public Release addNewRelease(Project project, int codeRelease) {
         SessionPackage sp = new SessionPackage();
         try {
             Release rls = new Release(codeRelease, new Date(), 0, null);
             rls.setProject(project);
             sp.getSession().save(rls);
             sp.getTx().commit();
-            return true;
+            return rls;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return null;
         } finally {
             sp.getSession().close();
         }

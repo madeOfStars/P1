@@ -1,6 +1,7 @@
 package entity;
 // Generated Apr 2, 2017 9:11:23 AM by Hibernate Tools 4.3.1
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +39,8 @@ public class Release implements java.io.Serializable, Identifiable {
     private Project project;
     
     private List<Revision> releaseVersion=new ArrayList<>();
+    
+    private File releaseFolder;
 
     public Release() {
     }
@@ -130,6 +133,15 @@ public class Release implements java.io.Serializable, Identifiable {
 
     public void setReleaseVersion(List<Revision> releaseVersion) {
         this.releaseVersion = releaseVersion;
+    }
+
+    @Transient
+    public File getReleaseFolder() {
+        return releaseFolder;
+    }
+
+    public void setReleaseFolder(File releaseFolder) {
+        this.releaseFolder = releaseFolder;
     }
 
     @Transient

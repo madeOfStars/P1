@@ -44,7 +44,7 @@ public class MListener<E> extends MouseListenerHelper {
             } else if (temp.getName().equals(LabelEnum.NEW_RELEASE_LBL.name())) {
                 flowUtil.addNewRelease();
             } else if (temp.getName().equals(LabelEnum.NEW_REVISION_LBL.name())) {
-
+                flowUtil.addNewRevision();
             }
         } else if (src instanceof JTable) {
             JTable table = (JTable) src;
