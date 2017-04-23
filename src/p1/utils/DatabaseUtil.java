@@ -66,11 +66,12 @@ public class DatabaseUtil {
         return lista;
     }
 
-    public Release addNewRelease(Project project, int codeRelease) {
+    public Release addNewRelease(Project project, int codeRelease, String f) {
         SessionPackage sp = new SessionPackage();
         try {
             Release rls = new Release(codeRelease, new Date(), 0, null);
             rls.setProject(project);
+            rls.setReleaseFolder(f);
             sp.getSession().save(rls);
             sp.getTx().commit();
             return rls;

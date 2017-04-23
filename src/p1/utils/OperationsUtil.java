@@ -11,6 +11,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import p1.enums.ActiveView;
 import p1.enums.ImageEnum;
+import p1.interfaces.Pathable;
 
 /**
  *
@@ -76,7 +77,7 @@ public class OperationsUtil {
         }
         return null;
     }
-    
+
     public void popUpMessages(Boolean success, String messageOK, String messageFAIL) {
         popUpMessages(success, messageOK, messageFAIL, flowUtil.getActiveView());
     }
@@ -92,7 +93,7 @@ public class OperationsUtil {
                     FlowUtil.getInstance().defineFirstView();
                     break;
                 case PROJECT_VIEW:
-                    flowUtil.defineProjectView((Project)FlowUtil.getReturnable().getElement());
+                    flowUtil.defineProjectView((Project) FlowUtil.getReturnable().getElement());
                     break;
             }
         } else {
@@ -105,13 +106,10 @@ public class OperationsUtil {
     }
 
     public boolean addNewRelease(Project project, int releaseCode) {
-        Release rls=databaseUtil.addNewRelease(project, releaseCode);
-        if (rls!=null){
-            File f=addReleaseFolder(project, releaseCode);
-            if (f!=null){
-                rls.setReleaseFolder(f);
-                return true;
-            }
+        File f = addFolder(project, releaseCode);
+        if (f != null) {
+            Release rls=databaseUtil.addNewRelease(project, releaseCode,f.getPath());
+            return rls!=null;
         }
         return false;
     }
@@ -119,10 +117,31 @@ public class OperationsUtil {
     private File addReleaseFolder(Project p, int releaseCode) {
         File f = new File("C:\\releases\\" + p.getProjectName() + "-" + releaseCode + "");
         if (!f.exists()) {
-            if (f.mkdir())
+            if (f.mkdir()) {
                 return f;
-            else
+            } else {
                 return null;
+            }
+        } else {
+            return f;
+        }
+    }
+    
+    private <E extends Pathable> File addFolder(E element, int code){
+        File f = new File(element.folderPath(code));
+        /*if (element instanceof Release){
+            Release rls=(Release)element;
+            f = new File("C:\\releases\\" + element.toString()+ "-" + code + "");
+        } else {
+            f = new File("C:\\releases\\" + element.toString()+ "-" + code + "");
+        }*/
+        
+        if (!f.exists()) {
+            if (f.mkdir()) {
+                return f;
+            } else {
+                return null;
+            }
         } else {
             return f;
         }
@@ -148,12 +167,27 @@ public class OperationsUtil {
     public void deleteProjects(List<Integer> lista) {
         popUpMessages(databaseUtil.deleteProjects(lista), "Project(s) deleted Successfully", "Failed to delete Project(s)", ActiveView.PROJECT_VIEW);
     }
-    
+
     public void delete(String elementName, List<Integer> lista) {
-        popUpMessages(databaseUtil.delete(elementName, lista), elementName+"(s) deleted Successfully", "Failed to delete "+elementName+"(s)");
+        popUpMessages(databaseUtil.delete(elementName, lista), elementName + "(s) deleted Successfully", "Failed to delete " + elementName + "(s)");
     }
 
     public void updateRelease(Release release) {
+        updateReleaseFolder(release);
         popUpMessages(databaseUtil.update(release), "Release Updated Successfully", "Release Failed To Update");
+    }
+    
+    private void updateReleaseFolder(Release release){
+        String currentFileName=release.getReleaseFolder();
+        File currentFile=new File(currentFileName);
+        String []currentFileNameParts=currentFileName.split("-");
+        String newFileName=currentFileNameParts[0]+"-"+release.getCode();
+        currentFile.renameTo(new File(newFileName));
+        release.setReleaseFolder(newFileName);
+    }
+    
+    public void addNewRevision(Release release, int revisionCode){
+        File f = addFolder(release, revisionCode);
+        int i=5;
     }
 }

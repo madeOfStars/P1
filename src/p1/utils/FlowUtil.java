@@ -119,6 +119,7 @@ public class FlowUtil {
         if (code!=null){
             Release release=(Release)getReturnable().getElement();
             int intCode=Integer.parseInt(code);
+            OperationsUtil.getInstance().addNewRevision(release, intCode);
         }
     }
 

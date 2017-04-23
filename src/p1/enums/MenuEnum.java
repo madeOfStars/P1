@@ -11,9 +11,13 @@ public enum MenuEnum {
     EDIT_PRJ(102, "Edit project"),
     DEL_PRJ(103, "Delete project"),
     RELEASE(11, "Release"),
-    NEW_RLS(101, "Add New release"),
-    EDIT_RLS(102, "Edit release"),
-    DEL_RLS(103, "Delete release"),
+    NEW_RLS(111, "Add New release"),
+    EDIT_RLS(112, "Edit release"),
+    DEL_RLS(113, "Delete release"),
+    REVISION(12, "Revision"),
+    NEW_RVS(121,"Add New revision"),
+    EDIT_RVS(122,"Edit revision"),
+    DEL_RVS(123,"Delete revision"),
     EXIT(999,"Exit");
 
     private int id;

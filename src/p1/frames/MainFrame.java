@@ -32,6 +32,7 @@ public class MainFrame extends JFrame {
     private final OperationsUtil op = OperationsUtil.getInstance();
     private JMenu prj;
     private JMenu rls;
+    private JMenu rvs;
 
     public MainFrame() {
         setSize(700, 600);
@@ -46,12 +47,19 @@ public class MainFrame extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         MenuItemListener mListener = new MenuItemListener();
         MListener ml = new MListener();
+
+        /*
+         File Menu
+         */
         JMenu fileMenu = new JMenu(MenuEnum.FILE.getLabel());
         fileMenu.setFont(FontEnum.CONTENT.getFont());
         fileMenu.setName(MenuEnum.FILE.name());
         fileMenu.addMenuListener(ml);
         menuBar.add(fileMenu);
 
+        /*
+         Project Menu
+         */
         prj = new JMenu(MenuEnum.PROJECT.getLabel());
         prj.setFont(FontEnum.CONTENT.getFont());
         fileMenu.add(prj);
@@ -72,6 +80,9 @@ public class MainFrame extends JFrame {
         prj.add(delPrj);
         delPrj.addActionListener(mListener);
 
+        /*
+         Release Memu
+         */
         rls = new JMenu(MenuEnum.RELEASE.getLabel());
         rls.setFont(FontEnum.CONTENT.getFont());
         fileMenu.add(rls);
@@ -92,6 +103,34 @@ public class MainFrame extends JFrame {
         rls.add(delRls);
         delRls.addActionListener(mListener);
 
+        /*
+         Revision Menu
+         */
+        rvs = new JMenu(MenuEnum.REVISION.getLabel());
+        rvs.setFont(FontEnum.CONTENT.getFont());
+        fileMenu.add(rvs);
+
+        JMenuItem newRvs = new JMenuItem(MenuEnum.NEW_RVS.getLabel());
+        newRvs.setFont(FontEnum.CONTENT.getFont());
+        newRvs.setName(MenuEnum.NEW_RVS.name());
+        rvs.add(newRvs);
+        newRvs.addActionListener(mListener);
+        JMenuItem editRvs = new JMenuItem(MenuEnum.EDIT_RVS.getLabel());
+        editRvs.setFont(FontEnum.CONTENT.getFont());
+        editRvs.setName(MenuEnum.EDIT_RVS.name());
+        editRvs.setEnabled(false);
+        rvs.add(editRvs);
+        editRvs.addActionListener(mListener);
+        JMenuItem delRvs = new JMenuItem(MenuEnum.DEL_RVS.getLabel());
+        delRvs.setName(MenuEnum.DEL_RVS.name());
+        delRvs.setFont(FontEnum.CONTENT.getFont());
+        delRvs.setEnabled(false);
+        rvs.add(delRvs);
+        delRvs.addActionListener(mListener);
+
+        /*
+         Exit Menu
+         */
         fileMenu.addSeparator();
         JMenuItem exit = new JMenuItem(MenuEnum.EXIT.getLabel());
         exit.setFont(FontEnum.CONTENT.getFont());
@@ -124,7 +163,7 @@ public class MainFrame extends JFrame {
                 epd.setVisible(true);
             } else if (temp.getName().equals(MenuEnum.DEL_PRJ.name())) {
                 List<Project> lista = DatabaseUtil.getInstance().getAllProjects();
-                DeleteDialog<Project> deleteDialog = new DeleteDialog<>(MainFrame.this, "Select Projects To be Deleted", lista,Project.class);
+                DeleteDialog<Project> deleteDialog = new DeleteDialog<>(MainFrame.this, "Select Projects To be Deleted", lista, Project.class);
                 deleteDialog.setVisible(true);
             } else if (temp.getName().equals(MenuEnum.NEW_RLS.name())) {
                 FlowUtil.getInstance().addNewRelease();
@@ -132,9 +171,11 @@ public class MainFrame extends JFrame {
                 EditReleaseDialog erd = new EditReleaseDialog(MainFrame.this, MenuEnum.EDIT_RLS.getLabel());
                 erd.setVisible(true);
             } else if (temp.getName().equals(MenuEnum.DEL_RLS.name())) {
-                List<Release> lista=op.getAllReleases((Project)FlowUtil.getReturnable().getElement());
-                DeleteDialog<Release> deleteDialog=new DeleteDialog<>(MainFrame.this,"Select Release to be deleted",lista, Release.class);
+                List<Release> lista = op.getAllReleases((Project) FlowUtil.getReturnable().getElement());
+                DeleteDialog<Release> deleteDialog = new DeleteDialog<>(MainFrame.this, "Select Release to be deleted", lista, Release.class);
                 deleteDialog.setVisible(true);
+            } else if (temp.getName().equals(MenuEnum.NEW_RVS.name())) {
+                FlowUtil.getInstance().addNewRevision();
             } else if (temp.getName().equals(MenuEnum.EXIT.name())) {
                 System.exit(0);
             }
@@ -153,16 +194,19 @@ public class MainFrame extends JFrame {
                     case HOME: {
                         prj.setEnabled(true);
                         rls.setEnabled(false);
+                        rvs.setEnabled(false);
                         break;
                     }
                     case PROJECT_VIEW: {
                         prj.setEnabled(false);
                         rls.setEnabled(true);
+                        rvs.setEnabled(false);
                         break;
                     }
                     case RELEASE_VIEW: {
                         rls.setEnabled(false);
                         prj.setEnabled(false);
+                        rvs.setEnabled(true);
                         break;
                     }
                 }

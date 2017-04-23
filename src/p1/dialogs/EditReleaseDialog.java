@@ -38,7 +38,7 @@ public class EditReleaseDialog extends DialogHelper {
 
     private final JButton okBtn;
     private final JButton cancelBtn;
-    
+
     private Release selectedRelease = null;
 
     public EditReleaseDialog(JFrame frame, String title) {
@@ -108,7 +108,7 @@ public class EditReleaseDialog extends DialogHelper {
         @Override
         public void actionPerformed(ActionEvent e) {
             Object src = e.getSource();
-            
+
             if (src instanceof JComboBox) {
                 JComboBox<Project> combo = (JComboBox<Project>) src;
                 selectedRelease = (Release) combo.getSelectedItem();
@@ -120,7 +120,6 @@ public class EditReleaseDialog extends DialogHelper {
 
             } else {
                 if (src == okBtn) {
-                    //selectedRelease = new Release();
                     selectedRelease.setCode(Integer.parseInt(codeTF.getText()));
                     if (no.isSelected()) {
                         selectedRelease.setClosed(1);
