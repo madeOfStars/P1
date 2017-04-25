@@ -3,8 +3,15 @@ package p1.utils;
 import entity.Project;
 import entity.Release;
 import entity.Revision;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -129,12 +136,6 @@ public class OperationsUtil {
     
     private <E extends Pathable> File addFolder(E element, int code){
         File f = new File(element.folderPath(code));
-        /*if (element instanceof Release){
-            Release rls=(Release)element;
-            f = new File("C:\\releases\\" + element.toString()+ "-" + code + "");
-        } else {
-            f = new File("C:\\releases\\" + element.toString()+ "-" + code + "");
-        }*/
         
         if (!f.exists()) {
             if (f.mkdir()) {
@@ -151,8 +152,8 @@ public class OperationsUtil {
         return databaseUtil.closeRelease(release);
     }
 
-    public List<Revision> getAllVersions(Release release) {
-        return databaseUtil.getAllVersion(release);
+    public List<Revision> getAllRevisions(Release release) {
+        return databaseUtil.getAllRevisions(release);
     }
 
     public void exitDialog(JDialog dialog) {
@@ -188,6 +189,53 @@ public class OperationsUtil {
     
     public void addNewRevision(Release release, int revisionCode){
         File f = addFolder(release, revisionCode);
-        int i=5;
+        Revision rvs=DatabaseUtil.getInstance().addNewRevision(release, revisionCode);
+        if (rvs!=null){
+            elaborateFiles(rvs, f);
+        }
+    }
+    
+    private void elaborateFiles(Revision revision, File f){
+        runCMD(revision,f);
+    }
+    
+    private void runCMD(Revision revision, File f){
+        BufferedReader reader=null;
+        BufferedWriter bw = null;
+        FileWriter outFile=null;
+        try {
+            //String path=revision.getRelease().getProject().getPath(); no privileges to try this path from this pc...
+            String path="C:\\Temp\\repo1trunk\\realStuff";
+            String command="svn log "+path+ " -v -r "+revision.getRevisionNumber();
+            System.out.println(command);
+            StringBuilder output = new StringBuilder();
+            String outFileName=f.getPath()+"\\"+revision.getRelease().getCode()+"_"+revision.getRevisionNumber()+".fwc";
+            outFile=new FileWriter(outFileName);
+            bw=new BufferedWriter(outFile);
+            Process child = Runtime.getRuntime().exec(command);
+            child.waitFor();
+            reader = new BufferedReader(new InputStreamReader(child.getInputStream()));
+ 
+            String line = "";
+            while ((line = reader.readLine())!= null) 
+            {
+                output.append(line + "\n");
+            }
+            
+            bw.write(output.toString());
+            
+        } catch (IOException ex) {
+            Logger.getLogger(OperationsUtil.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(OperationsUtil.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                bw.close();
+                outFile.close();
+                reader.close();
+            } catch (IOException ex) {
+                Logger.getLogger(OperationsUtil.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }

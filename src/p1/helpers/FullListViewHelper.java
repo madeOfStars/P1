@@ -2,6 +2,7 @@ package p1.helpers;
 
 import entity.Project;
 import entity.Release;
+import entity.Revision;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
@@ -58,6 +59,16 @@ public class FullListViewHelper<E> {
                     data[i][3] = lista.get(i).getClosed();
                     data[i][4] = lista.get(i).getDateClosed();
                     data[i][5] = OperationsUtil.getInstance().getIcon(ImageEnum.CLOSE);
+                }
+                break;
+            }
+            case REVISION_TABLE: {
+                List<Revision> lista=OperationsUtil.getInstance().getAllRevisions((Release) element);
+                data=new Object[lista.size()][3];
+                for (int i = 0; i < lista.size(); i++) {
+                    data[i][0] = lista.get(i).getId();
+                    data[i][1] = lista.get(i).getRevisionNumber();
+                    data[i][2] = lista.get(i).getDateAdded();
                 }
                 break;
             }

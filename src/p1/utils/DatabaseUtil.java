@@ -138,7 +138,7 @@ public class DatabaseUtil {
         return nr > 0;
     }
     
-    public List<Revision> getAllVersion(Release release){
+    public List<Revision> getAllRevisions(Release release){
         SessionPackage sp = new SessionPackage();
         String hql = "select r "
                 + "from Revision r "
@@ -163,6 +163,22 @@ public class DatabaseUtil {
         } catch (Exception e){
             e.printStackTrace();
             return false;
+        } finally {
+            sp.getSession().close();
+        }
+    }
+    
+    public Revision addNewRevision(Release release, int code){
+        SessionPackage sp=new SessionPackage();
+        try {
+            Revision rev=new Revision(code, new Date());
+            rev.setRelease(release);
+            sp.getSession().save(rev);
+            sp.getTx().commit();
+            return rev;
+        } catch(Exception e){
+            e.printStackTrace();
+            return null;
         } finally {
             sp.getSession().close();
         }
