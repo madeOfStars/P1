@@ -188,6 +188,10 @@ public class OperationsUtil {
     
     public void addNewRevision(Release release, int revisionCode){
         File f = addFolder(release, revisionCode);
-        int i=5;
+        runCommand(release);
+    }
+    
+    private void runCommand(Release release){
+        
     }
 }
