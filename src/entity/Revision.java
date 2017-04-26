@@ -35,6 +35,11 @@ public class Revision implements java.io.Serializable {
         this.id = id;
         this.revisionNumber = revisionNumber;
     }
+    
+    public Revision(int revisionNumber, Date dateAdded){
+        this.revisionNumber=revisionNumber;
+        this.dateAdded=dateAdded;
+    }
 
     public Revision(int id, int revisionNumber, Date dateAdded) {
         this.id = id;

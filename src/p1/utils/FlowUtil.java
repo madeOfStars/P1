@@ -92,10 +92,10 @@ public class FlowUtil {
     public void defineReleaseView(Release release) {
         clean();
         OperationsUtil oUtil = OperationsUtil.getInstance();
-        List<Revision> lista = oUtil.getAllVersions(release);
+        List<Revision> lista = oUtil.getAllRevisions(release);
         if (lista != null && lista.size() > 0) {
             setView(new HeaderTemplate("All Versions", true, release));
-            setView((FlowUtil.r = new FullListView(TableEnum.VERSION_TABLE, release)).getPanel());
+            setView((FlowUtil.r = new FullListView(TableEnum.REVISION_TABLE, release)).getPanel());
             getCp().setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
         } else {
             setView(new HeaderTemplate(release.getCode() + "", true, release));
@@ -120,6 +120,7 @@ public class FlowUtil {
             Release release=(Release)getReturnable().getElement();
             int intCode=Integer.parseInt(code);
             OperationsUtil.getInstance().addNewRevision(release, intCode);
+            defineReleaseView(release);
         }
     }
 

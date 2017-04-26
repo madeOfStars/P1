@@ -13,7 +13,7 @@ public enum TableEnum {
 
     PROJECT_TABLE(new String[]{"ID", "Project Name", "Path", "Date Added"}),
     RELEASE_TABLE(new String[]{"ID", "Code", "Date Added", "Closed", "Date Closed",""}),
-    VERSION_TABLE(new String[]{"ID", "Version Number", "Date Added"});
+    REVISION_TABLE(new String[]{"ID", "Version Number", "Date Added"});
 
     private String[] columns;
 

@@ -3,13 +3,25 @@ package p1.utils;
 import entity.Project;
 import entity.Release;
 import entity.Revision;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import p1.enums.ActiveView;
+import p1.enums.FileTypeEnum;
 import p1.enums.ImageEnum;
 import p1.interfaces.Pathable;
 
@@ -108,8 +120,8 @@ public class OperationsUtil {
     public boolean addNewRelease(Project project, int releaseCode) {
         File f = addFolder(project, releaseCode);
         if (f != null) {
-            Release rls=databaseUtil.addNewRelease(project, releaseCode,f.getPath());
-            return rls!=null;
+            Release rls = databaseUtil.addNewRelease(project, releaseCode, f.getPath());
+            return rls != null;
         }
         return false;
     }
@@ -126,16 +138,10 @@ public class OperationsUtil {
             return f;
         }
     }
-    
-    private <E extends Pathable> File addFolder(E element, int code){
+
+    private <E extends Pathable> File addFolder(E element, int code) {
         File f = new File(element.folderPath(code));
-        /*if (element instanceof Release){
-            Release rls=(Release)element;
-            f = new File("C:\\releases\\" + element.toString()+ "-" + code + "");
-        } else {
-            f = new File("C:\\releases\\" + element.toString()+ "-" + code + "");
-        }*/
-        
+
         if (!f.exists()) {
             if (f.mkdir()) {
                 return f;
@@ -151,8 +157,8 @@ public class OperationsUtil {
         return databaseUtil.closeRelease(release);
     }
 
-    public List<Revision> getAllVersions(Release release) {
-        return databaseUtil.getAllVersion(release);
+    public List<Revision> getAllRevisions(Release release) {
+        return databaseUtil.getAllRevisions(release);
     }
 
     public void exitDialog(JDialog dialog) {
@@ -176,22 +182,96 @@ public class OperationsUtil {
         updateReleaseFolder(release);
         popUpMessages(databaseUtil.update(release), "Release Updated Successfully", "Release Failed To Update");
     }
-    
-    private void updateReleaseFolder(Release release){
-        String currentFileName=release.getReleaseFolder();
-        File currentFile=new File(currentFileName);
-        String []currentFileNameParts=currentFileName.split("-");
-        String newFileName=currentFileNameParts[0]+"-"+release.getCode();
+
+    private void updateReleaseFolder(Release release) {
+        String currentFileName = release.getReleaseFolder();
+        File currentFile = new File(currentFileName);
+        String[] currentFileNameParts = currentFileName.split("-");
+        String newFileName = currentFileNameParts[0] + "-" + release.getCode();
         currentFile.renameTo(new File(newFileName));
         release.setReleaseFolder(newFileName);
     }
-    
-    public void addNewRevision(Release release, int revisionCode){
+
+    public void addNewRevision(Release release, int revisionCode) {
         File f = addFolder(release, revisionCode);
-        runCommand(release);
+        Revision rvs = DatabaseUtil.getInstance().addNewRevision(release, revisionCode);
+        if (rvs != null) {
+            popUpMessages(elaborateFiles(rvs, f), "Revision Added Successfully", "Failed to add Revision");
+        }
     }
-    
-    private void runCommand(Release release){
-        
+
+    private boolean elaborateFiles(Revision revision, File f) {
+        return runCMD(revision, f);
+    }
+
+    private boolean runCMD(Revision revision, File f) {
+        BufferedReader reader = null;
+        BufferedWriter bw = null;
+        FileWriter outFile = null;
+        try {
+            String path = revision.getRelease().getProject().getPath();
+            String extenedPath = revision.getRelease().getProject().getPath() + "\\arm_am-ejb"; //this is the real path, used from my PC at work
+            //String path="C:\\Temp\\repo1trunk\\realStuff"; // path used from my pc at home
+            String command = "svn log " + extenedPath + " -v -r " + revision.getRevisionNumber();
+            System.out.println(command);
+            StringBuilder output = new StringBuilder();
+            String outFileName = f.getPath();
+            String extenedOutFileName = f.getPath() + "\\" + revision.getRelease().getCode() + "_" + revision.getRevisionNumber() + ".fwc";
+            outFile = new FileWriter(extenedOutFileName);
+            bw = new BufferedWriter(outFile);
+            Process child = Runtime.getRuntime().exec(command);
+            child.waitFor();
+            reader = new BufferedReader(new InputStreamReader(child.getInputStream()));
+
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                output.append(line + "\n");
+                separateFiles(line, path, outFileName);
+            }
+
+            bw.write(output.toString());
+            return true;
+        } catch (IOException ex) {
+            Logger.getLogger(OperationsUtil.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } catch (InterruptedException ex) {
+            Logger.getLogger(OperationsUtil.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            try {
+                bw.close();
+                outFile.close();
+                reader.close();
+            } catch (IOException ex) {
+                Logger.getLogger(OperationsUtil.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            }
+        }
+    }
+
+    private void separateFiles(String line, String source, String dest) throws IOException {
+        if (line.toLowerCase().contains("arm_am".toLowerCase())) {
+            String[] pathElements = line.split("/");
+            String outFileName = pathElements[pathElements.length - 1];
+            int pos = line.indexOf("arm_am");
+            String subPath = line.substring(pos);
+            String fullPath = source + "\\" + subPath;
+            Path pathIn = Paths.get(fullPath);
+            Path pathOut = Paths.get(dest + "\\" + outFileName);
+            Files.copy(pathIn, pathOut, StandardCopyOption.REPLACE_EXISTING);
+
+        }
+    }
+
+    private FileTypeEnum getFileType(String line) {
+        if (line.endsWith(FileTypeEnum.AS.getExtension())) {
+            return FileTypeEnum.AS;
+        } else if (line.endsWith(FileTypeEnum.JAVA.getExtension())) {
+            return FileTypeEnum.JAVA;
+        } else if (line.endsWith(FileTypeEnum.MXML.getExtension())) {
+            return FileTypeEnum.MXML;
+        } else {
+            return FileTypeEnum.SQL;
+        }
     }
 }

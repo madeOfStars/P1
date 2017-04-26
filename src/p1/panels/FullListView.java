@@ -45,7 +45,7 @@ public class FullListView<E> extends FullListViewHelper<E> implements Returnable
                 setReleaseTable();
                 break;
             }
-            case VERSION_TABLE: {
+            case REVISION_TABLE: {
                 setVersionTable();
                 break;
             }
