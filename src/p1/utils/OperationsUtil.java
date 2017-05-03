@@ -195,9 +195,7 @@ public class OperationsUtil {
     public void addNewRevision(Release release, int revisionCode) {
         File f = addFolder(release, revisionCode);
         Revision rvs = DatabaseUtil.getInstance().addNewRevision(release, revisionCode);
-        if (rvs != null) {
-            popUpMessages(elaborateFiles(rvs, f), "Revision Added Successfully", "Failed to add Revision");
-        }
+        popUpMessages((rvs!=null && elaborateFiles(rvs, f)), "Revision Added Successfully", "Failed to add Revision");
     }
 
     private boolean elaborateFiles(Revision revision, File f) {
