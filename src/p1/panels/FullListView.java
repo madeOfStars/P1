@@ -101,7 +101,7 @@ public class FullListView<E> extends FullListViewHelper<E> implements Returnable
         jTable.setShowVerticalLines(false);
         jTable.setFont(FontEnum.TABLE_CONTENT.getFont());
         jTable.getTableHeader().setFont(FontEnum.TABLE_HEADER.getFont());
-        jTable.addMouseListener(new MListener());
+        jTable.addMouseListener(new MListener(element));
         jTable.removeColumn(jTable.getColumnModel().getColumn(0));
         JScrollPane jsp = new JScrollPane(jTable);
         jsp.setBorder(BorderFactory.createEmptyBorder());

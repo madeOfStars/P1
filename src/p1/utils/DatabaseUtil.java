@@ -142,7 +142,8 @@ public class DatabaseUtil {
         SessionPackage sp = new SessionPackage();
         String hql = "select r "
                 + "from Revision r "
-                + "where r.release.id=:id";
+                + "where r.release.id=:id "
+                + "order by r.revisionNumber asc";
         Query q = sp.getSession().createQuery(hql);
         q.setParameter("id", release.getId());
         List<Revision> lista = q.list();

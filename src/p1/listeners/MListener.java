@@ -2,6 +2,7 @@ package p1.listeners;
 
 import entity.Project;
 import entity.Release;
+import entity.Revision;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.util.Date;
@@ -75,6 +76,13 @@ public class MListener<E> extends MouseListenerHelper {
                         flowUtil.defineReleaseView(release);
                     }
                 }
+            } else if (table.getName().equals(TableEnum.REVISION_TABLE.name())){
+                Point p = event.getPoint();
+                int row = table.rowAtPoint(p);
+                int column = table.columnAtPoint(p);
+                TableModel model = table.getModel();
+                Revision revision=createRevision(model, row, (Release)element);
+                operationsUtils.openRevisionFolder(revision);
             }
         }
     }

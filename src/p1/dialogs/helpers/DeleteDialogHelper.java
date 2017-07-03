@@ -2,7 +2,6 @@ package p1.dialogs.helpers;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import p1.components.EnhancedJCheckBox;
 import p1.enums.FontEnum;

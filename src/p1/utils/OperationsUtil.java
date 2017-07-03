@@ -3,6 +3,7 @@ package p1.utils;
 import entity.Project;
 import entity.Release;
 import entity.Revision;
+import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -47,7 +48,7 @@ public class OperationsUtil {
     }
 
     public File chooseFile() {
-        JFileChooser chooser = new JFileChooser("D:/U/ujava/TestDirForP1");
+        JFileChooser chooser = new JFileChooser("C:\\Dev2012\\source");
         chooser.setDialogTitle("Choose Project");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int returnValue = chooser.showOpenDialog(null);
@@ -106,6 +107,9 @@ public class OperationsUtil {
                     break;
                 case PROJECT_VIEW:
                     flowUtil.defineProjectView((Project) FlowUtil.getReturnable().getElement());
+                    break;
+                case RELEASE_VIEW:
+                    flowUtil.defineReleaseView((Release)FlowUtil.getReturnable().getElement());
                     break;
             }
         } else {
@@ -195,7 +199,9 @@ public class OperationsUtil {
     public void addNewRevision(Release release, int revisionCode) {
         File f = addFolder(release, revisionCode);
         Revision rvs = DatabaseUtil.getInstance().addNewRevision(release, revisionCode);
-        popUpMessages((rvs!=null && elaborateFiles(rvs, f)), "Revision Added Successfully", "Failed to add Revision");
+        if (rvs!=null){
+            elaborateFiles(rvs, f);
+        }
     }
 
     private boolean elaborateFiles(Revision revision, File f) {
@@ -257,7 +263,7 @@ public class OperationsUtil {
             Path pathIn = Paths.get(fullPath);
             Path pathOut = Paths.get(dest + "\\" + outFileName);
             Files.copy(pathIn, pathOut, StandardCopyOption.REPLACE_EXISTING);
-
+            System.out.println("Copied "+pathIn+" to "+pathOut);
         }
     }
 
@@ -270,6 +276,14 @@ public class OperationsUtil {
             return FileTypeEnum.MXML;
         } else {
             return FileTypeEnum.SQL;
+        }
+    }
+    
+    public void openRevisionFolder(Revision revision){
+        try {
+            Desktop.getDesktop().open(new File("C:\\releases\\"+revision.getRelease().getProject().getProjectName()+"-"+revision.getRelease().getCode()+"\\"+revision.getRevisionNumber()));
+        } catch (IOException ex) {
+            Logger.getLogger(OperationsUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

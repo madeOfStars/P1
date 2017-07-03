@@ -2,6 +2,7 @@ package p1.frames;
 
 import entity.Project;
 import entity.Release;
+import entity.Revision;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -124,7 +125,7 @@ public class MainFrame extends JFrame {
         JMenuItem delRvs = new JMenuItem(MenuEnum.DEL_RVS.getLabel());
         delRvs.setName(MenuEnum.DEL_RVS.name());
         delRvs.setFont(FontEnum.CONTENT.getFont());
-        delRvs.setEnabled(false);
+        delRvs.setEnabled(true);
         rvs.add(delRvs);
         delRvs.addActionListener(mListener);
 
@@ -176,6 +177,10 @@ public class MainFrame extends JFrame {
                 deleteDialog.setVisible(true);
             } else if (temp.getName().equals(MenuEnum.NEW_RVS.name())) {
                 FlowUtil.getInstance().addNewRevision();
+            } else if (temp.getName().equals(MenuEnum.DEL_RVS.name())) {
+                List<Revision> lista = op.getAllRevisions((Release)FlowUtil.getReturnable().getElement());
+                DeleteDialog<Revision> deleteDialog = new DeleteDialog<>(MainFrame.this,"Select Revision to be deleted", lista, Revision.class);
+                deleteDialog.setVisible(true);
             } else if (temp.getName().equals(MenuEnum.EXIT.name())) {
                 System.exit(0);
             }

@@ -7,6 +7,7 @@ package p1.helpers;
 
 import entity.Project;
 import entity.Release;
+import entity.Revision;
 import java.awt.event.MouseAdapter;
 import java.util.Date;
 import javax.swing.table.TableModel;
@@ -26,5 +27,15 @@ public class MouseListenerHelper extends MouseAdapter {
         release.setDateClosed((Date) model.getValueAt(row, 4));
         release.setProject(project);
         return release;
+    }
+    
+    protected Revision createRevision(TableModel model, int row, Release release){
+        Revision revision=new Revision();
+        revision.setId((int)model.getValueAt(row, 0));
+        revision.setRevisionNumber((int)model.getValueAt(row, 1));
+        revision.setDateAdded((Date)model.getValueAt(row, 2));
+        
+        revision.setRelease(release);
+        return revision;
     }
 }
