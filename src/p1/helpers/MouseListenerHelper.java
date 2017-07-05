@@ -25,6 +25,7 @@ public class MouseListenerHelper extends MouseAdapter {
         release.setDateAdded((Date) model.getValueAt(row, 2));
         release.setClosed((int) model.getValueAt(row, 3));
         release.setDateClosed((Date) model.getValueAt(row, 4));
+        release.setReleaseFolder((String) model.getValueAt(row, 5));
         release.setProject(project);
         return release;
     }

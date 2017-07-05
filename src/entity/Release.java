@@ -159,4 +159,9 @@ public class Release implements Serializable, Identifiable, Pathable {
     public String folderPath(int code) {
         return project.folderPath(this.getCode())+"/"+code;
     }
+
+    @Override
+    public void renameFolderPath(String name) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

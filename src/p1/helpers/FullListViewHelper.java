@@ -51,14 +51,15 @@ public class FullListViewHelper<E> {
             }
             case RELEASE_TABLE: {
                 List<Release> lista = OperationsUtil.getInstance().getAllReleases((Project) element);
-                data = new Object[lista.size()][6];
+                data = new Object[lista.size()][7];
                 for (int i = 0; i < lista.size(); i++) {
                     data[i][0] = lista.get(i).getId();
                     data[i][1] = lista.get(i).getCode();
                     data[i][2] = lista.get(i).getDateAdded();
                     data[i][3] = lista.get(i).getClosed();
                     data[i][4] = lista.get(i).getDateClosed();
-                    data[i][5] = OperationsUtil.getInstance().getIcon(ImageEnum.CLOSE);
+                    data[i][5] = lista.get(i).getReleaseFolder();
+                    data[i][6] = OperationsUtil.getInstance().getIcon(ImageEnum.CLOSE);
                 }
                 break;
             }
@@ -89,7 +90,7 @@ public class FullListViewHelper<E> {
         @Override
         public Class<?> getColumnClass(int column) {
             if (tableEnum == TableEnum.RELEASE_TABLE) {
-                if (column == 5) {
+                if (column == 6) {
                     return ImageIcon.class;
                 }
             }

@@ -85,6 +85,7 @@ public class FullListView<E> extends FullListViewHelper<E> implements Returnable
         jTable.removeColumn(jTable.getColumnModel().getColumn(0));
         jTable.removeColumn(jTable.getColumnModel().getColumn(2));
         jTable.removeColumn(jTable.getColumnModel().getColumn(2));
+        jTable.removeColumn(jTable.getColumnModel().getColumn(2));
         JScrollPane jsp = new JScrollPane(jTable);
         jsp.setBorder(BorderFactory.createEmptyBorder());
         tablePanel.add(jsp);

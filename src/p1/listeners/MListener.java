@@ -79,7 +79,6 @@ public class MListener<E> extends MouseListenerHelper {
             } else if (table.getName().equals(TableEnum.REVISION_TABLE.name())){
                 Point p = event.getPoint();
                 int row = table.rowAtPoint(p);
-                int column = table.columnAtPoint(p);
                 TableModel model = table.getModel();
                 Revision revision=createRevision(model, row, (Release)element);
                 operationsUtils.openRevisionFolder(revision);

@@ -281,7 +281,7 @@ public class OperationsUtil {
     
     public void openRevisionFolder(Revision revision){
         try {
-            Desktop.getDesktop().open(new File("C:\\releases\\"+revision.getRelease().getProject().getProjectName()+"-"+revision.getRelease().getCode()+"\\"+revision.getRevisionNumber()));
+            Desktop.getDesktop().open(new File(revision.getRelease().getReleaseFolder()+"\\"+revision.getRevisionNumber()));
         } catch (IOException ex) {
             Logger.getLogger(OperationsUtil.class.getName()).log(Level.SEVERE, null, ex);
         }

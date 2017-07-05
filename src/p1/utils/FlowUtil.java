@@ -74,7 +74,7 @@ public class FlowUtil {
             getCp().setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
         } else {
             setView(new HeaderTemplate(project.getProjectName(), true, project));
-            setView((FlowUtil.r=new NoItemPanel(LabelEnum.NEW_RELEASE_LBL.name(), LabelEnum.NEW_RELEASE_LBL.getMessage(),project)).getPanel());
+            setView((FlowUtil.r = new NoItemPanel(LabelEnum.NEW_RELEASE_LBL.name(), LabelEnum.NEW_RELEASE_LBL.getMessage(), project)).getPanel());
         }
         this.activeView = ActiveView.PROJECT_VIEW;
     }
@@ -82,7 +82,7 @@ public class FlowUtil {
     public void addNewRelease() {
         String code = JOptionPane.showInputDialog(getCp(), "Enter Release Code");
         if (code != null) {
-            Project project=(Project)getReturnable().getElement();
+            Project project = (Project) getReturnable().getElement();
             int intCode = Integer.parseInt(code);
             OperationsUtil.getInstance().popUpMessages(OperationsUtil.getInstance().addNewRelease(project, intCode), "Release Successfully Added", "Release Failed To Be Added", ActiveView.PROJECT_VIEW);
             defineProjectView(project);
@@ -99,7 +99,7 @@ public class FlowUtil {
             getCp().setLayout(new BoxLayout(cp, BoxLayout.PAGE_AXIS));
         } else {
             setView(new HeaderTemplate(release.getCode() + "", true, release));
-            setView((FlowUtil.r=new NoItemPanel(LabelEnum.NEW_REVISION_LBL.name(), LabelEnum.NEW_REVISION_LBL.getMessage(),release)).getPanel());
+            setView((FlowUtil.r = new NoItemPanel(LabelEnum.NEW_REVISION_LBL.name(), LabelEnum.NEW_REVISION_LBL.getMessage(), release)).getPanel());
         }
         this.activeView = ActiveView.RELEASE_VIEW;
     }
@@ -113,13 +113,21 @@ public class FlowUtil {
             defineProjectView(release.getProject());
         }
     }
-    
-    public void addNewRevision(){
+
+    public void addNewRevision() {
         String code = JOptionPane.showInputDialog(getCp(), "Enter Revision Code");
-        if (code!=null){
-            Release release=(Release)getReturnable().getElement();
-            int intCode=Integer.parseInt(code);
-            OperationsUtil.getInstance().addNewRevision(release, intCode);
+        if (code != null) {
+            Release release = (Release) getReturnable().getElement();
+            if (code.contains(",")) {
+                String []lista=code.split(",");
+                for (String el : lista){
+                    int intCode = Integer.parseInt(el.trim());
+                    OperationsUtil.getInstance().addNewRevision(release, intCode);
+                }
+            } else {
+                int intCode = Integer.parseInt(code);
+                OperationsUtil.getInstance().addNewRevision(release, intCode);
+            }
             defineReleaseView(release);
         }
     }

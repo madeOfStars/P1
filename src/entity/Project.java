@@ -116,4 +116,8 @@ public class Project implements Identifiable, Serializable, Pathable {
         return this.folderPathPart1+this.toString()+"-"+code;
     }
 
+    @Override
+    public void renameFolderPath(String name) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

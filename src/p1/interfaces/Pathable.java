@@ -6,4 +6,5 @@ package p1.interfaces;
  */
 public interface Pathable {
     public String folderPath(int code);
+    public void renameFolderPath(String name);
 }
